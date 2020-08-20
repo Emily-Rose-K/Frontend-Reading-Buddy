@@ -22,7 +22,6 @@ export default function Profile(props) {
                         email: response.data.user.email
                     })
                     props.setUserReaderExperiences(response.data.user.readerExperiences)
-                    console.log(`Setting friends: ${response.data.user.friends}`)
                     props.setUserFriends(response.data.user.friends)
                     let theseUserBooks = response.data.user.readerExperiences.map(readerExperience => {
                         return readerExperience.book;
@@ -41,15 +40,15 @@ export default function Profile(props) {
     }
     return (
         <div>
-            {props.currentUser.user_name}
+            {props.userInfo.user_name}
         
             <p>Number of books read this week: {Math.floor(Math.random() * 3)} </p>
             <p>Number of books read this month: {Math.floor(Math.random() * 10)}  </p>
             <p>Currently reading: </p>
-            <a href={`/profile/${props.currentUser.id}/friends`}>Friends</a><br></br>
-            <a href={`/profile/${props.currentUser.id}/reviews`}>Reviews</a><br></br>
-            <a href={`/profile/${props.currentUser.id}/wishlist`}>Wishlist</a><br></br>
-            <a href={`/profile/${props.currentUser.id}/haveread`}>Books I've Read</a><br></br>
+            <a href={`/profile/${id}/friends`}>Friends</a><br></br>
+            <a href={`/profile/${id}/reviews`}>Reviews</a><br></br>
+            <a href={`/profile/${id}/wishlist`}>Wishlist</a><br></br>
+            <a href={`/profile/${id}/haveread`}>Books I've Read</a><br></br>
             <p>USERINFO: {JSON.stringify(props.userInfo)}</p>
         </div>
     )
