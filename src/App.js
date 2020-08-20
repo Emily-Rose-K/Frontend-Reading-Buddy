@@ -96,11 +96,8 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
-              userReaderExperiences={userReaderExperiences} 
               setUserReaderExperiences={setUserReaderExperiences}
-              userBooks={userBooks} 
               setUserBooks={setUserBooks}
-              userFriends={userFriends}
               setUserFriends={setUserFriends}
               currentUser={currentUser} 
             />
@@ -109,9 +106,19 @@ function App() {
           <Route path='/login' render ={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} setIsAuthenticated={setIsAuthenticated} user={currentUser} /> } />
           {/* <PrivateRoute path='/profile' render = {(props) => <Profile {...props} user={currentUser} /> }/> */}
 
-          <Route exact path={`/profile/${currentUser.id}/friends`}>
-            <Profile setProfileInfo={setProfileInfo} profileInfo={profileInfo} currentUser={currentUser} />
-            <ProfileFriends profileInfo={profileInfo} currentUser={currentUser}/>
+          <Route exact path={`/profile/:id/friends`}>
+            <Profile 
+              userInfo={userInfo} 
+              setUserInfo={setUserInfo}
+              setUserReaderExperiences={setUserReaderExperiences}
+              setUserBooks={setUserBooks}
+              setUserFriends={setUserFriends}
+              currentUser={currentUser} 
+            />
+            <ProfileFriends 
+              userFriends={userFriends}
+              currentUser={currentUser}
+            />
           </Route>
 
           <Route path={`/profile/${currentUser.id}/reviews`}>
