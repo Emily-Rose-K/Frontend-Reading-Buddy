@@ -98,6 +98,7 @@ function App() {
               setUserInfo={setUserInfo}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
+              userFriends={userFriends}
               setUserFriends={setUserFriends}
               currentUser={currentUser} 
             />
