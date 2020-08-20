@@ -10,7 +10,6 @@ export default function Profile(props) {
     let { id } = useParams()
 
     useEffect(() => {
-        console.log("in profile.js useEffect")
         setRefresh(false)
         axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${id}`)
             .then(response => {
@@ -23,6 +22,7 @@ export default function Profile(props) {
                         email: response.data.user.email
                     })
                     props.setUserReaderExperiences(response.data.user.readerExperiences)
+                    console.log(`Setting friends: ${response.data.user.friends}`)
                     props.setUserFriends(response.data.user.friends)
                     let theseUserBooks = response.data.user.readerExperiences.map(readerExperience => {
                         return readerExperience.book;
@@ -31,7 +31,6 @@ export default function Profile(props) {
                 } else {
                     setError(response.statusText)
                 }
-                console.log(response)
             })
             .catch (err => {
                 setError(err.message)
@@ -52,9 +51,6 @@ export default function Profile(props) {
             <a href={`/profile/${props.currentUser.id}/wishlist`}>Wishlist</a><br></br>
             <a href={`/profile/${props.currentUser.id}/haveread`}>Books I've Read</a><br></br>
             <p>USERINFO: {JSON.stringify(props.userInfo)}</p>
-            <p>READEREXPERIENCES: {JSON.stringify(props.userReaderExperiences)}</p>
-            <p>BOOKS: {JSON.stringify(props.userBooks)}</p>
-            <p>FRIENDS: {JSON.stringify(props.userFriends)}</p>
         </div>
     )
 }

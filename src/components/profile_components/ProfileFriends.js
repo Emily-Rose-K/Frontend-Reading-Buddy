@@ -10,11 +10,24 @@ export default function ProfileFriends(props) {
         )
     }
 
-    const friends = props.profileInfo.friends.map((friend, key) => {
-        return (
-            <div key={key} value={friends._id} onClick={handleClick}>
-                <p>{friends.first_name} {friends.last_name}</p>
-            </div>
-        )
-    }) 
+    let friends = [];
+    if (props.userFriends.length){
+        console.log(`USER FRIENDS: ${JSON.stringify(props.userFriends)}`);
+        friends = props.userFriends.map((friend, key) => {
+            console.log(friend);
+            return (
+                <div key={key} value={friends._id} onClick={handleClick}>
+                    <p>{friend.first_name} {friend.last_name}</p>
+                </div>
+            )
+        })
+    }
+    return (
+        <div>
+            <h2>User's Friends</h2>
+            {friends}
+        </div>
+    )
+
+
 }
