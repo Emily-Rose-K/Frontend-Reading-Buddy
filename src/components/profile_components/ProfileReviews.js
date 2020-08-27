@@ -1,26 +1,36 @@
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import ReaderExperience from '../ReaderExperience'
 
 export default function ProfileReviews(props) {
 
-    const handleClick = (e) => {
-        e.preventDefault()
-        return (
-            <Redirect to={`/readerexperiences/${e.target.value}/edit`} />
-        )
+    let reviews = [];
+    let anythingReviewed = false;
+    if (props.userReaderExperiences.length){
+        reviews = props.userReaderExperiences.map((experience, key) => {
+            if (experience.review){
+                anythingReviewed = true;
+                return (
+                    <div key={key} value={reviews._id}>
+                        <p>
+                            <a href={`/readerexperiences/${experience._id}/edit`}>{experience.book.title}</a> by {experience.book.author}
+                        </p>
+                        <p>{experience.rating} out of 5 stars</p>
+                        <p>{experience.review}</p>
+                    </div>
+                )
+            }
+        })
     }
-
-    const reviews = props.profileInfo.readerExperiences.map((review, key) => {
-        return (
-            <div key={key} value={reviews._id} onClick={handleClick}>
-                <p>{reviews.user.user_name} says: {reviews.review}</p>
-                <p>And rates the book a: {reviews.rating} out of 5!</p>
+    if (!anythingReviewed){
+        reviews =
+            <div>
+                <p>I prefer reading words over writing them</p>
             </div>
-        )
-    }) 
+    } 
 
     return(
-        <div>
+        <div className="half-pane">
+            <h2>My book reviews</h2>
             {reviews}
         </div>
     )

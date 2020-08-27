@@ -124,9 +124,18 @@ function App() {
             />
           </Route>
 
-          <Route path={`/profile/${currentUser.id}/reviews`}>
-            <Profile setProfileInfo={setProfileInfo} profileInfo={profileInfo} currentUser={currentUser} /> 
-            <ProfileReviews profileInfo={profileInfo} />
+          <Route path={`/profile/:id/reviews`}>
+            <Profile 
+              userInfo={userInfo} 
+              setUserInfo={setUserInfo}
+              setUserReaderExperiences={setUserReaderExperiences}
+              setUserBooks={setUserBooks}
+              setUserFriends={setUserFriends}
+              currentUser={currentUser}
+            /> 
+            <ProfileReviews 
+              userReaderExperiences={userReaderExperiences}
+            />
           </Route>
 
           <Route path={`/profile/:id/wishlist`}>
