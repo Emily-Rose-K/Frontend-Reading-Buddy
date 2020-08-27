@@ -39,9 +39,8 @@ export default function Profile(props) {
         return null;
     }
     return (
-        <div>
-            {props.userInfo.user_name}
-        
+        <div className="half-pane">
+            <h2>{props.userInfo.user_name}'s Profile</h2>
             <p>Number of books read this week: {Math.floor(Math.random() * 3)} </p>
             <p>Number of books read this month: {Math.floor(Math.random() * 10)}  </p>
             <p>Currently reading: </p>
@@ -49,7 +48,6 @@ export default function Profile(props) {
             <a href={`/profile/${id}/reviews`}>Reviews</a><br></br>
             <a href={`/profile/${id}/wishlist`}>Wishlist</a><br></br>
             <a href={`/profile/${id}/haveread`}>Books I've Read</a><br></br>
-            <p>USERINFO: {JSON.stringify(props.userInfo)}</p>
         </div>
     )
 }

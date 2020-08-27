@@ -116,7 +116,8 @@ function App() {
               setUserFriends={setUserFriends}
               currentUser={currentUser} 
             />
-            <ProfileFriends 
+            <ProfileFriends
+              userInfo={userInfo} 
               userFriends={userFriends}
               currentUser={currentUser}
             />
