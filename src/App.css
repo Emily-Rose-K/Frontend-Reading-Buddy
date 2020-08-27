@@ -56,3 +56,10 @@
   align-items: center;
   height: 300px;
 }
+
+.half-pane{
+  display: inline-block;
+  width: calc(50% - 20px);
+  vertical-align: top;
+  border: 1px solid black;
+}

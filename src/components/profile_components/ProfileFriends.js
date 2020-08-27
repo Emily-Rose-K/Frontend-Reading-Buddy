@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
+import { propTypes } from 'react-bootstrap/esm/Image'
 
 export default function ProfileFriends(props) {
 
@@ -15,19 +16,15 @@ export default function ProfileFriends(props) {
         friends = props.userFriends.map((friend, key) => {
             return (
                 <div key={key} value={friends._id} onClick={handleClick}>
-                    <button>
                         <NavLink className="nav-link" to = {`/profile/${friend._id}`}>{friend.first_name} {friend.last_name}</NavLink>
-                    </button>
                 </div>
             )
         })
     }
     return (
-        <div>
-            <h2>User's Friends</h2>
+        <div className="half-pane">
+            <h2>{props.userInfo.user_name}'s Buddies</h2>
             {friends}
         </div>
     )
-
-
 }
