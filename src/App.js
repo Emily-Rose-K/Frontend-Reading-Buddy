@@ -101,6 +101,7 @@ function App() {
               userFriends={userFriends}
               setUserFriends={setUserFriends}
               currentUser={currentUser} 
+              userBooks={userBooks}
             />
           </Route>
           <Route path='/register' component = {Register} />
@@ -128,14 +129,32 @@ function App() {
             <ProfileReviews profileInfo={profileInfo} />
           </Route>
 
-          <Route path={`/profile/${currentUser.id}/wishlist`}>
-            <Profile setProfileInfo={setProfileInfo} profileInfo={profileInfo} currentUser={currentUser}/> 
-            <ProfileHaveRead profileInfo={profileInfo} /> 
+          <Route path={`/profile/:id/wishlist`}>
+            <Profile 
+              userInfo={userInfo} 
+              setUserInfo={setUserInfo}
+              setUserReaderExperiences={setUserReaderExperiences}
+              setUserBooks={setUserBooks}
+              setUserFriends={setUserFriends}
+              currentUser={currentUser}
+            /> 
+            <ProfileWishlist 
+              userReaderExperiences={userReaderExperiences}
+            /> 
           </Route>
 
-          <Route path={`/profile/${currentUser.id}/haveread`}>
-            <Profile setProfileInfo={setProfileInfo} profileInfo={profileInfo} currentUser={currentUser} />
-            <ProfileWishlist profileInfo={profileInfo} />
+          <Route path={`/profile/:id/haveread`}>
+            <Profile 
+              userInfo={userInfo} 
+              setUserInfo={setUserInfo}
+              setUserReaderExperiences={setUserReaderExperiences}
+              setUserBooks={setUserBooks}
+              setUserFriends={setUserFriends}
+              currentUser={currentUser} 
+            />
+            <ProfileHaveRead 
+              userReaderExperiences={userReaderExperiences}
+            />
           </Route>
 
           <Route path='/' exact component={Home} />
