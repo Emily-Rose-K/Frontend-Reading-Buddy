@@ -6,7 +6,7 @@ export default function ProfileWishList(props) {
     let wantAnything = false;
     if (props.userReaderExperiences.length){
         wishedBooks = props.userReaderExperiences.map((experience, key) => {
-            if (experience.status === "wishlist"){
+            if (experience.status === "wishlist" || experience.status === "started"){
                 wantAnything = true;
                 return(
                     <div key={key} value={experience._id}>
