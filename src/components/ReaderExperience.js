@@ -1,34 +1,21 @@
-/*
-this component needs to be passed props in the form:
-{
-    bookInfo: {
-        title: "blah",
-        author: "blah",
-        genre: "blahblah"
-        summary: "blah"
-    },
-    readerExperienceInfo: {
-        rating: "blah",
-        review: "blah",
-        date_started: "blah",
-        date_finished: "blah"
-    }
-
-}
-*/
-
 // TODO: Component should redirect backwards after form submission, but that looks like it will take more work in higher-level files
 // TODO: Style
 
-import React , { useState } from 'react'
+import React , { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import Axios from 'axios';
 
-export default function ReaderExperience({bookInfo, readerExperienceInfo}) {
+export default function ReaderExperience() {
+
     const ratingOptions = ["1", "2", "3", "4", "5"];
-    let [ rating, setRating ] = useState(readerExperienceInfo.rating);
-    let [ review, setReview ] = useState(readerExperienceInfo.review);
-    let [ dateStarted, setDateStarted ] = useState(readerExperienceInfo.date_started);
-    let [ dateFinished, setDateFinished ] = useState(readerExperienceInfo.date_finished);
+    let [ rating, setRating ] = useState("");
+    let [ review, setReview ] = useState("");
+    let [ dateStarted, setDateStarted ] = useState("");
+    let [ dateFinished, setDateFinished ] = useState("");
+    let [ title, setTitle ] = useState("");
+    let [ author, setAuthor ] = useState("");
+    let [ description, setDescription ] = useState("");
+    let { id } = useParams();
 
     const handleRating = (e) => {
         setRating(e.target.value)
@@ -41,16 +28,24 @@ export default function ReaderExperience({bookInfo, readerExperienceInfo}) {
     }
     const handleDateFinished = (e) => {
         setDateFinished(e.target.value)
+        console.log(`dateFinished: ${dateFinished}`)
     }
     const handleSubmit = (e) => {
+        let status = "wishlist";
+        if (review || dateFinished) {
+            status = "finished"
+        } else if (dateStarted) {
+            status = "started"
+        }
         e.preventDefault();
         const readerExperienceData = {
             rating: rating,
             review: review,
+            status: status,
             date_started: dateStarted,
             date_finished: dateFinished
         }
-        Axios.put(`${process.env.REACT_APP_SERVER_URL}ReaderExperiences/${readerExperienceInfo.id}`, readerExperienceData)
+        Axios.put(`${process.env.REACT_APP_SERVER_URL}ReaderExperiences/${id}`, readerExperienceData)
             .then(res => {
                 console.log(`Update response from backend: ${JSON.stringify(res)}`)
             })
@@ -59,14 +54,29 @@ export default function ReaderExperience({bookInfo, readerExperienceInfo}) {
             })
     }
 
+    useEffect(() => {
+        Axios.get(`${process.env.REACT_APP_SERVER_URL}/readerexperiences/${id}`)
+            .then(response => {
+                console.log(`response: ${JSON.stringify(response)}`);
+                if (response.status === 200){
+                    if (response.data.rating) setRating(response.data.rating);
+                    if (response.data.review) setReview(response.data.review);
+                    if (response.data.dateStarted) setDateStarted(response.data.dateStarted);
+                    if (response.data.dateFinished) setDateFinished(response.data.dateFinished);
+                    setTitle(response.data.book.title);
+                    setAuthor(response.data.book.author);
+                    setDescription(response.data.book.description);
+                }
+            })
+    })
+
     return (
         <>
             <div className="container left-panel">
                 <h3>Current Book:</h3>
-                <h4>{bookInfo.title}</h4>
-                <p>Author: {bookInfo.author}</p>
-                <p>Genre: {bookInfo.genre}</p>
-                <p>Summary: {bookInfo.summary}</p>
+                <h4>{title}</h4>
+                <p>Author: {author}</p>
+                <p>Summary: {description}</p>
             </div>
             <div className="container right-panel">
                 <form onSubmit={handleSubmit}>
