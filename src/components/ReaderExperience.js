@@ -31,21 +31,19 @@ export default function ReaderExperience() {
         console.log(`dateFinished: ${dateFinished}`)
     }
     const handleSubmit = (e) => {
+        e.preventDefault();
         let status = "wishlist";
         if (review || dateFinished) {
             status = "finished"
         } else if (dateStarted) {
             status = "started"
         }
-        e.preventDefault();
-        const readerExperienceData = {
-            rating: rating,
-            review: review,
-            status: status,
-            date_started: dateStarted,
-            date_finished: dateFinished
-        }
-        Axios.put(`${process.env.REACT_APP_SERVER_URL}ReaderExperiences/${id}`, readerExperienceData)
+        const readerExperienceData = {status};
+        if (rating) readerExperienceData.rating = rating;
+        if (review) readerExperienceData.review = review;
+        if (dateStarted) readerExperienceData.date_started = dateStarted;
+        if (dateFinished) readerExperienceData.date_finished = dateFinished;
+        Axios.put(`${process.env.REACT_APP_SERVER_URL}/readerexperiences/${id}`, readerExperienceData)
             .then(res => {
                 console.log(`Update response from backend: ${JSON.stringify(res)}`)
             })
