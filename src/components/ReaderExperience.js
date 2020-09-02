@@ -1,5 +1,7 @@
 // TODO: Component should redirect backwards after form submission, but that looks like it will take more work in higher-level files
 // TODO: Style
+// TODO: Change update method to update CHANGED fields instead of TRUE fields.  
+//       Right now, if a user mistakenly marks a book read and wants to erase it, they can't.  The new value reads as false and so is not updated.
 
 import React , { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -59,8 +61,8 @@ export default function ReaderExperience() {
                 if (response.status === 200){
                     if (response.data.rating) setRating(response.data.rating);
                     if (response.data.review) setReview(response.data.review);
-                    if (response.data.dateStarted) setDateStarted(response.data.dateStarted);
-                    if (response.data.dateFinished) setDateFinished(response.data.dateFinished);
+                    if (response.data.date_started) setDateStarted(response.data.date_started.substring(0,10));
+                    if (response.data.date_finished) setDateFinished(response.data.date_finished.substring(0,10));
                     setTitle(response.data.book.title);
                     setAuthor(response.data.book.author);
                     setDescription(response.data.book.description);
