@@ -13,7 +13,7 @@ export default function Profile(props) {
 
     useEffect(() => {
         setRefresh(false)
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${id}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}users/${id}`)
             .then(response => {
                 if (response.status === 200) {
                     // rearrange backend response into shallower objects & pass to props
