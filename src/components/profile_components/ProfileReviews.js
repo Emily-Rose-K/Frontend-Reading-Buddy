@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import ReaderExperience from '../ReaderExperience'
 
 export default function ProfileReviews(props) {
@@ -12,7 +13,7 @@ export default function ProfileReviews(props) {
                 return (
                     <div key={key} value={reviews._id}>
                         <p>
-                            <a href={`/readerexperiences/${experience._id}/edit`}>{experience.book.title}</a> by {experience.book.author}
+                            <NavLink className="nav-link" to = {`/readerexperiences/${experience._id}/edit`}> {experience.book.title} </NavLink> by {experience.book.author}
                         </p>
                         <p>{experience.rating} out of 5 stars</p>
                         <p>{experience.review}</p>

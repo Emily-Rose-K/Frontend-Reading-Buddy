@@ -62,12 +62,11 @@ export default function Profile(props) {
             <h2>{props.userInfo.user_name}'s Profile</h2>
             <p>Number of books read this week: {readThisWeek} </p>
             <p>Number of books read this month: {readThisMonth}  </p>
-            <NavLink className="nav-link" to = {`/profile/friends/${id}`}> Navlink friends </NavLink>
-            <a href={`/profile/friends/${id}`}>Friends</a><br></br>
-            <a href={`/profile/${id}/reviews`}>Reviews</a><br></br>
-            <a href={`/profile/${id}/wishlist`}>Wishlist</a><br></br>
-            <a href={`/profile/${id}/reading`}>Currently reading</a><br></br>
-            <a href={`/profile/${id}/haveread`}>Books I've Read</a><br></br>
+            <NavLink className="nav-link" to = {`/profile/${id}/friends`}> Friends </NavLink><br />
+            <NavLink className="nav-link" to = {`/profile/${id}/reviews`}> Reviews </NavLink><br />
+            <NavLink className="nav-link" to = {`/profile/${id}/wishlist`}> Wishlist </NavLink><br />
+            <NavLink className="nav-link" to = {`/profile/${id}/reading`}> Currently reading </NavLink><br />
+            <NavLink className="nav-link" to = {`/profile/${id}/haveread`}> Books I've Read </NavLink><br />
         </div>
     )
 }

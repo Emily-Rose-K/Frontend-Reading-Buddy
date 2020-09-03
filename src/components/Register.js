@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 
 const Register = () => {
   let [first_name, setFirstName] = useState('')
@@ -101,7 +101,7 @@ const Register = () => {
             <input type="submit" value="Submit" />
             <button onClick={handleClear}>Clear</button>
             <h3>Already have an Account?</h3>
-            <a href="/login">Sign-in</a>
+            <NavLink className="nav-link" to="/login">Sign in</NavLink>
         </form>
     )
 }
