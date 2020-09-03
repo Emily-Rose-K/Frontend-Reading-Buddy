@@ -62,7 +62,7 @@ export default function Profile(props) {
             <h2>{props.userInfo.user_name}'s Profile</h2>
             <p>Number of books read this week: {readThisWeek} </p>
             <p>Number of books read this month: {readThisMonth}  </p>
-            <a href={`/profile/${id}/friends`}>Friends</a><br></br>
+            <a href={`/profile/friends/${id}`}>Friends</a><br></br>
             <a href={`/profile/${id}/reviews`}>Reviews</a><br></br>
             <a href={`/profile/${id}/wishlist`}>Wishlist</a><br></br>
             <a href={`/profile/${id}/reading`}>Currently reading</a><br></br>

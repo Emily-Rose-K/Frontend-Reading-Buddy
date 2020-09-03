@@ -91,7 +91,7 @@ function App() {
           <Route path='/books' component = {Books} />
           <Route exact path='/book/:id' component = {SearchBookDetails} />
 
-          <Route path='/profile/:id/friends'>
+          <Route path='/profile/friends/:id'>
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
