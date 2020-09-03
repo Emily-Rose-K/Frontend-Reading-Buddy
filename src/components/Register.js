@@ -46,7 +46,7 @@ const Register = () => {
         password: password,
       }
 
-      axios.post(`${process.env.REACT_APP_SERVER_URL}/users/register`, newUser)
+      axios.post(`${process.env.REACT_APP_SERVER_URL}users/register`, newUser)
         // .then(res => console.log(res.data))
     .then(res => {
       setRedirect(true)
