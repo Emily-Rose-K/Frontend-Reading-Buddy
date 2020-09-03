@@ -90,22 +90,6 @@ function App() {
 
           <Route path='/books' component = {Books} />
           <Route exact path='/book/:id' component = {SearchBookDetails} />
-          <Route exact path='/profile/:id'>
-            <Profile 
-              userInfo={userInfo} 
-              setUserInfo={setUserInfo}
-              userReaderExperiences={userReaderExperiences}
-              setUserReaderExperiences={setUserReaderExperiences}
-              setUserBooks={setUserBooks}
-              userFriends={userFriends}
-              setUserFriends={setUserFriends}
-              currentUser={currentUser} 
-              userBooks={userBooks}
-            />
-          </Route>
-          <Route path='/register' component = {Register} />
-          <Route path='/login' render ={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} setIsAuthenticated={setIsAuthenticated} user={currentUser} /> } />
-          {/* <PrivateRoute path='/profile' render = {(props) => <Profile {...props} user={currentUser} /> }/> */}
 
           <Route exact path={`/profile/:id/friends`}>
             <Profile 
@@ -183,6 +167,23 @@ function App() {
               userReaderExperiences={userReaderExperiences}
             />
           </Route>
+          
+          <Route exact path='/profile/:id'>
+            <Profile 
+              userInfo={userInfo} 
+              setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
+              setUserReaderExperiences={setUserReaderExperiences}
+              setUserBooks={setUserBooks}
+              userFriends={userFriends}
+              setUserFriends={setUserFriends}
+              currentUser={currentUser} 
+              userBooks={userBooks}
+            />
+          </Route>
+          <Route path='/register' component = {Register} />
+          <Route path='/login' render ={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} setIsAuthenticated={setIsAuthenticated} user={currentUser} /> } />
+          {/* <PrivateRoute path='/profile' render = {(props) => <Profile {...props} user={currentUser} /> }/> */}
 
           <Route path='/' exact component={Home} />
 
