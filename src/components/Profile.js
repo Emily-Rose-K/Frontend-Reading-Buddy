@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRefresh, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 // import ProfileFriends from '../components/profile_components/ProfileFriends'
 import axios from 'axios'
 
@@ -62,6 +62,7 @@ export default function Profile(props) {
             <h2>{props.userInfo.user_name}'s Profile</h2>
             <p>Number of books read this week: {readThisWeek} </p>
             <p>Number of books read this month: {readThisMonth}  </p>
+            <NavLink className="nav-link" to = {`/profile/friends/${id}`}> Navlink friends </NavLink>
             <a href={`/profile/friends/${id}`}>Friends</a><br></br>
             <a href={`/profile/${id}/reviews`}>Reviews</a><br></br>
             <a href={`/profile/${id}/wishlist`}>Wishlist</a><br></br>
