@@ -20,6 +20,7 @@ import SearchBookDetails from './components/SearchBookDetails';
 import ProfileFriends from './components/profile_components/ProfileFriends';
 import ProfileReviews from './components/profile_components/ProfileReviews';
 import ProfileHaveRead from './components/profile_components/ProfileHaveRead';
+import ProfileReading from './components/profile_components/ProfileReading';
 import ProfileWishlist from './components/profile_components/ProfileWishlist';
 import Axios from 'axios';
 import { Link } from 'react-router-dom'
@@ -149,6 +150,21 @@ function App() {
               currentUser={currentUser}
             /> 
             <ProfileWishlist 
+              userReaderExperiences={userReaderExperiences}
+            /> 
+          </Route>
+
+          <Route path={`/profile/:id/reading`}>
+            <Profile 
+              userInfo={userInfo} 
+              setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
+              setUserReaderExperiences={setUserReaderExperiences}
+              setUserBooks={setUserBooks}
+              setUserFriends={setUserFriends}
+              currentUser={currentUser}
+            /> 
+            <ProfileReading 
               userReaderExperiences={userReaderExperiences}
             /> 
           </Route>
