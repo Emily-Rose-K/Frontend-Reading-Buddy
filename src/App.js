@@ -41,9 +41,9 @@ function App() {
   let [isAuthenticated, setIsAuthenticated] = useState(true)
   let [profileInfo, setProfileInfo] = useState({})  // phase this out
   let [userInfo, setUserInfo] = useState({})
-  let [userReaderExperiences, setUserReaderExperiences] = useState({})
-  let [userBooks, setUserBooks] = useState({})
-  let [userFriends, setUserFriends] = useState({})
+  let [userReaderExperiences, setUserReaderExperiences] = useState([])
+  let [userBooks, setUserBooks] = useState([])
+  let [userFriends, setUserFriends] = useState([])
 
   useEffect(() => {
     let token;
@@ -93,6 +93,7 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               userFriends={userFriends}
@@ -109,6 +110,7 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               setUserFriends={setUserFriends}
@@ -125,6 +127,7 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               setUserFriends={setUserFriends}
@@ -139,6 +142,7 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               setUserFriends={setUserFriends}
@@ -153,6 +157,7 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               setUserFriends={setUserFriends}
