@@ -20,6 +20,7 @@ import SearchBookDetails from './components/SearchBookDetails';
 import ProfileFriends from './components/profile_components/ProfileFriends';
 import ProfileReviews from './components/profile_components/ProfileReviews';
 import ProfileHaveRead from './components/profile_components/ProfileHaveRead';
+import ProfileReading from './components/profile_components/ProfileReading';
 import ProfileWishlist from './components/profile_components/ProfileWishlist';
 import Axios from 'axios';
 import { Link } from 'react-router-dom'
@@ -41,9 +42,9 @@ function App() {
   let [isAuthenticated, setIsAuthenticated] = useState(true)
   let [profileInfo, setProfileInfo] = useState({})  // phase this out
   let [userInfo, setUserInfo] = useState({})
-  let [userReaderExperiences, setUserReaderExperiences] = useState({})
-  let [userBooks, setUserBooks] = useState({})
-  let [userFriends, setUserFriends] = useState({})
+  let [userReaderExperiences, setUserReaderExperiences] = useState([])
+  let [userBooks, setUserBooks] = useState([])
+  let [userFriends, setUserFriends] = useState([])
 
   useEffect(() => {
     let token;
@@ -93,6 +94,7 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               userFriends={userFriends}
@@ -109,6 +111,7 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               setUserFriends={setUserFriends}
@@ -125,6 +128,7 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               setUserFriends={setUserFriends}
@@ -139,6 +143,7 @@ function App() {
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               setUserFriends={setUserFriends}
@@ -149,10 +154,26 @@ function App() {
             /> 
           </Route>
 
+          <Route path={`/profile/:id/reading`}>
+            <Profile 
+              userInfo={userInfo} 
+              setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
+              setUserReaderExperiences={setUserReaderExperiences}
+              setUserBooks={setUserBooks}
+              setUserFriends={setUserFriends}
+              currentUser={currentUser}
+            /> 
+            <ProfileReading 
+              userReaderExperiences={userReaderExperiences}
+            /> 
+          </Route>
+
           <Route path={`/profile/:id/haveread`}>
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
+              userReaderExperiences={userReaderExperiences}
               setUserReaderExperiences={setUserReaderExperiences}
               setUserBooks={setUserBooks}
               setUserFriends={setUserFriends}
