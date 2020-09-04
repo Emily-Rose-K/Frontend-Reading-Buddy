@@ -54,7 +54,7 @@ function ControlledCarusel() {
 export default function Home() {
     const handleSeed = (e) => {
         e.preventDefault();
-        Axios.post(`${process.env.REACT_APP_SERVER_URL}/books`)
+        Axios.post(`${process.env.REACT_APP_SERVER_URL}books`)
             .then(result => {
                 console.log(`Seed request sent with no errors: ${JSON.stringify(result)}`)
             })
