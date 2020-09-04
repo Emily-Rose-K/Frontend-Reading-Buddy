@@ -19,7 +19,7 @@ export default function Books() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/books?title=${encodeURIComponent(searchTitle)}&author=${encodeURIComponent(searchAuthor)}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}books?title=${encodeURIComponent(searchTitle)}&author=${encodeURIComponent(searchAuthor)}`)
         //axios.get(`https://www.googleapis.com/books/v1/volumes?key=${process.env.REACT_APP_API_KEY}&q=${searchParam}`)
             .then(response => {
                 // check the response is good
@@ -55,6 +55,7 @@ export default function Books() {
         return (
             <div>
                 <Link to={`/book/${book._id}`}>
+                {/* Do not display book covers here since openlibrary api has a rate limit of just 100 per 5 minutes */}
                 Title: {book.title} &nbsp;&nbsp;
                 Authors: {book.author} &nbsp;&nbsp;
                 {/*Published: {book.volumeInfo.publishedDate} */}
