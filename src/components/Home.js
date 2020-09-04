@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
+import Axios from 'axios';
 
 function ControlledCarusel() {
     const [index, setIndex] = useState(0)
@@ -51,12 +52,25 @@ function ControlledCarusel() {
 
 
 export default function Home() {
+    const handleSeed = (e) => {
+        e.preventDefault();
+        Axios.post(`${process.env.REACT_APP_SERVER_URL}/books`)
+            .then(result => {
+                console.log(`Seed request sent with no errors: ${JSON.stringify(result)}`)
+            })
+            .catch(err => {
+                console.log(`Error submitting seed request: ${JSON.stringify(err)}`)
+            })
+    }
     return (
         <>
             <ControlledCarusel />
             <div className="title">
                 <h1>Welcome to Reading Buddy</h1>
             </div>
+            <form onSubmit={handleSeed}>
+                <input type='submit' value="Seed DB" />
+            </form> 
         </>
     )
 }
