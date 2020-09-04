@@ -52,7 +52,7 @@ function ControlledCarusel() {
 
 
 export default function Home() {
-    const handleSeed = (e) => {
+    /*const handleSeed = (e) => {
         e.preventDefault();
         Axios.post(`${process.env.REACT_APP_SERVER_URL}books`)
             .then(result => {
@@ -61,16 +61,16 @@ export default function Home() {
             .catch(err => {
                 console.log(`Error submitting seed request: ${JSON.stringify(err)}`)
             })
-    }
+    }*/
     return (
         <>
             <ControlledCarusel />
             <div className="title">
                 <h1>Welcome to Reading Buddy</h1>
             </div>
-            <form onSubmit={handleSeed}>
+            {/*<form onSubmit={handleSeed}>
                 <input type='submit' value="Seed DB" />
-            </form> 
+            </form> */}
         </>
     )
 }
