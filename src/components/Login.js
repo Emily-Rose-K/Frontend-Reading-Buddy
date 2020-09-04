@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../utils/setAuthToken';
-import { Redirect } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 
 const Login = (props) => {  
     console.log(props)
@@ -23,6 +23,7 @@ const Login = (props) => {
         email: email,
         password: password
       }
+      console.log(`Posting to ${process.env.REACT_APP_SERVER_URL}users/login`)
       axios.post(`${process.env.REACT_APP_SERVER_URL}users/login`, userData)
         .then(res => {
           const { token } = res.data;
@@ -62,7 +63,7 @@ const Login = (props) => {
                 <button onClick={handleClear}>Clear</button>
             </form>
             <h3>Need an Account?</h3>
-            <a href="/register">Sign-up</a>
+            <NavLink className="nav-link" to = "/register">Sign up</NavLink>
         </div>
     )
 }

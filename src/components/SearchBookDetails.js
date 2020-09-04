@@ -7,6 +7,7 @@ export default function SearchBookDetails() {
     const [error, setError] = useState(null);
     const [reviews, setReviews] = useState([]);
     const [status, setStatus] = useState('');
+    const [description, setDescription] = useState('')
     
 
     let { id } = useParams()
@@ -14,7 +15,7 @@ export default function SearchBookDetails() {
     useEffect(() => {
         // Call the server
         // https://www.googleapis.com/books/v1/volumes/iJgu5v1CJ8gC
-        axios.get(`https://www.googleapis.com/books/v1/volumes/${id}`)
+        /*axios.get(`https://www.googleapis.com/books/v1/volumes/${id}`)
             .then(response => {
                 // check the response is good
                 if (response.status === 200) {
@@ -29,12 +30,39 @@ export default function SearchBookDetails() {
             })
             .catch(err => {
                 setError(err.message)
-            })
-        axios.get(`${process.env.REACT_APP_SERVER_URL}books/${id}?title=${book.volumeInfo.title}&author=${book.volumeInfo.authors[0]}`)
+            })*/
+        axios.get(`${process.env.REACT_APP_SERVER_URL}books/${id}`)
             .then(response => {
                 if (response.status === 200) {
-                    console.log(response.data)
-                    setReviews(response.readerExperiencesInfo)
+                    console.log(JSON.stringify(response.data.bookInfo))
+                    setBook(response.data.bookInfo)
+                    setReviews(response.data.bookInfo.readerExperiences)
+                    /*console.log(`About to call https://openlibrary.org/api/books?bibkeys=ISBN:${response.data.bookInfo.api_id}&jscmd=details`)
+                    axios.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${response.data.bookInfo.api_id}&jscmd=details`, {
+                        headers: {'Content-Type': 'text/plain'}
+                    })
+                        .then(openLibraryResponse => {
+                            console.log(`working with ${JSON.stringify(openLibraryResponse)}`)
+                            setDescription(JSON.stringify(openLibraryResponse[`ISBN:0439358078"`]))
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })*/
+                    const bookDescriptionRequest = axios.create();
+                    bookDescriptionRequest.defaults.headers.common = {};
+                    bookDescriptionRequest.defaults.headers.common.accept = 'application/json';
+                    bookDescriptionRequest.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${response.data.bookInfo.api_id}&jscmd=details&format=json`)
+                        .then(openLibraryResponse => {
+                            console.log(`working with ${JSON.stringify(openLibraryResponse.data[`ISBN:${response.data.bookInfo.api_id}`].details.description.value)}`)
+                            let rawDescription = JSON.parse(JSON.stringify(openLibraryResponse.data[`ISBN:${response.data.bookInfo.api_id}`].details.description.value))
+                            //rawDescription = rawDescription.replace(/\\r/, "blah")
+                            //rawDescription = rawDescription.replace(/\\n/, "bleh")
+                            setDescription(rawDescription)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                    //const { data } = await instance.get(generatedUrl);
                 } else {
                     console.error(response.statusText)
                 }
@@ -43,11 +71,11 @@ export default function SearchBookDetails() {
                 console.log(err)
             })
     }, [])
-    let authors = book.volumeInfo.authors.map((author, key) => {
+    /*let authors = book.volumeInfo.authors.map((author, key) => {
         return (
             <span>{author}</span>
         )
-    })
+    })*/
 
     let displayReviews = reviews.map((review, key) => {
         return (
@@ -73,21 +101,25 @@ export default function SearchBookDetails() {
         axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences?status=${status}&title=${book.volumeInfo.title}&author=${book.volumeInfo.authors[0]}&image_url=${book.volumeInfo.imageLinks.thumbnail}&description=${book.volumeInfo.description}`)
     }
 
-
+    if (!book) {
+        console.log("Waiting for server response");
+        return null;
+    }
     return (
         <div>
             <div>
-                <img src={book.volumeInfo.imageLinks.thumbnail}/>
-                <h1>{book.volumeInfo.title}</h1>
-                <p>By: {authors}</p>
-                <p>Publisher: {book.volumeInfo.publisher}</p>
-                <p>Published on: {book.volumeInfo.publishedDate}</p>
-                <p>Description: {book.volumeInfo.description}</p>
-                <p>Page Count: {book.volumeInfo.pageCount}</p>
-                <p>Average Rating: {book.volumeInfo.averageRating}</p>
+                <img src={`http://covers.openlibrary.org/b/isbn/${book.api_id}-L.jpg`} alt={`cover of ${book.title}`} />
+                <h1>{book.title}</h1>
+                <p>By: {book.author}</p>
+                {/*<p>Publisher: {book.volumeInfo.publisher}</p>
+                <p>Published on: {book.volumeInfo.publishedDate}</p>*/}
+                <p>{description}</p>
+                <p><a href={`http://covers.openlibrary.org/b/isbn/${book.api_id}-L.jpg`}>Photo</a> from <a href={`http://openlibrary.org/isbn/${book.api_id}`}>Open Library</a></p>
+                {/*<p>Page Count: {book.volumeInfo.pageCount}</p>
+                <p>Average Rating: {book.volumeInfo.averageRating}</p>*/}
                 <form>
                     <button onClick={handleWishlist}>Wishlist</button>
-                    <button onClick={handleCurrentlyReading}>Curerently Reading</button>
+                    <button onClick={handleCurrentlyReading}>Currently Reading</button>
                     <button onClick={handleHaveRead}>Have Read</button>
                 </form>
             </div>

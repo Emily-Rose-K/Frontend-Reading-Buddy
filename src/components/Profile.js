@@ -1,5 +1,5 @@
 import React, { useEffect, useReducer, useRefresh, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { NavLink, useParams } from 'react-router-dom'
 // import ProfileFriends from '../components/profile_components/ProfileFriends'
 import axios from 'axios'
 
@@ -13,7 +13,7 @@ export default function Profile(props) {
 
     useEffect(() => {
         setRefresh(false)
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${id}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}users/${id}`)
             .then(response => {
                 if (response.status === 200) {
                     // rearrange backend response into shallower objects & pass to props
@@ -62,11 +62,11 @@ export default function Profile(props) {
             <h2>{props.userInfo.user_name}'s Profile</h2>
             <p>Number of books read this week: {readThisWeek} </p>
             <p>Number of books read this month: {readThisMonth}  </p>
-            <a href={`/profile/${id}/friends`}>Friends</a><br></br>
-            <a href={`/profile/${id}/reviews`}>Reviews</a><br></br>
-            <a href={`/profile/${id}/wishlist`}>Wishlist</a><br></br>
-            <a href={`/profile/${id}/reading`}>Currently reading</a><br></br>
-            <a href={`/profile/${id}/haveread`}>Books I've Read</a><br></br>
+            <NavLink className="nav-link" to = {`/profile/${id}/friends`}> Friends </NavLink><br />
+            <NavLink className="nav-link" to = {`/profile/${id}/reviews`}> Reviews </NavLink><br />
+            <NavLink className="nav-link" to = {`/profile/${id}/wishlist`}> Wishlist </NavLink><br />
+            <NavLink className="nav-link" to = {`/profile/${id}/reading`}> Currently reading </NavLink><br />
+            <NavLink className="nav-link" to = {`/profile/${id}/haveread`}> Books I've Read </NavLink><br />
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export default function ProfileWishList(props) {
 
@@ -6,12 +7,12 @@ export default function ProfileWishList(props) {
     let wantAnything = false;
     if (props.userReaderExperiences.length){
         wishedBooks = props.userReaderExperiences.map((experience, key) => {
-            if (experience.status === "wishlist" || experience.status === "started"){
+            if (experience.status === "wishlist"){
                 wantAnything = true;
                 return(
                     <div key={key} value={experience._id}>
                         <p>
-                            <a href={`/readerexperiences/${experience._id}/edit`}>{experience.book.title}</a> by {experience.book.author}
+                            <NavLink className="nav-link" to = {`/readerexperiences/${experience._id}/edit`}> {experience.book.title} </NavLink> by {experience.book.author}
                         </p>
                     </div>
                 )
