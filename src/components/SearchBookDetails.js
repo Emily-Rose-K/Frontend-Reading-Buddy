@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import {  useParams } from 'react-router-dom'
 
-export default function SearchBookDetails() {
+export default function SearchBookDetails({ currentUser }) {
     const [book, setBook] = useState({})
     const [error, setError] = useState(null);
     const [reviews, setReviews] = useState([]);
@@ -88,17 +88,17 @@ export default function SearchBookDetails() {
     let handleWishlist = (e) => {
         e.preventDefault()
         setStatus('wishlist')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences?status=${status}&title=${book.volumeInfo.title}&author=${book.volumeInfo.authors[0]}&image_url=${book.volumeInfo.imageLinks.thumbnail}&description=${book.volumeInfo.description}`)
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
     }
     let handleCurrentlyReading = (e) => {
         e.preventDefault()
         setStatus('started')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences?status=${status}&title=${book.volumeInfo.title}&author=${book.volumeInfo.authors[0]}&image_url=${book.volumeInfo.imageLinks.thumbnail}&description=${book.volumeInfo.description}`)
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
     }
     let handleHaveRead = (e) => {
         e.preventDefault()
         setStatus('finished')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences?status=${status}&title=${book.volumeInfo.title}&author=${book.volumeInfo.authors[0]}&image_url=${book.volumeInfo.imageLinks.thumbnail}&description=${book.volumeInfo.description}`)
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
     }
 
     if (!book) {
