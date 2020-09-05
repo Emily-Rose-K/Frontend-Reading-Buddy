@@ -88,17 +88,17 @@ export default function SearchBookDetails({ currentUser }) {
     let handleWishlist = (e) => {
         e.preventDefault()
         setStatus('wishlist')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
     }
     let handleCurrentlyReading = (e) => {
         e.preventDefault()
         setStatus('started')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
     }
     let handleHaveRead = (e) => {
         e.preventDefault()
         setStatus('finished')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
     }
 
     if (!book) {
