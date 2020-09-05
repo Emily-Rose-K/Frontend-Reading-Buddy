@@ -79,7 +79,6 @@ export default function ReaderExperience() {
                 <h3>Current Book:</h3>
                 <h4>{title}</h4>
                 <p>Author: {author}</p>
-                <p>Summary: {description}</p>
             </div>
             <div className="container right-panel">
                 <form onSubmit={handleSubmit}>

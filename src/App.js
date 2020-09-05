@@ -89,7 +89,12 @@ function App() {
           </Route>
 
           <Route path='/books' component = {Books} />
-          <Route exact path='/book/:id' component = {SearchBookDetails} />
+          
+          <Route exact path='/book/:id'>
+            <SearchBookDetails
+              currentUser={currentUser} 
+            />
+          </Route>
 
           <Route exact path='/profile/:id'>
             <Profile 
