@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Redirect, useParams } from 'react-router-dom'
+import { Form, Button } from 'react-bootstrap'
 
 export default function SearchBookDetails({ currentUser }) {
     const [book, setBook] = useState({})
@@ -31,7 +32,7 @@ export default function SearchBookDetails({ currentUser }) {
             .catch(err => {
                 setError(err.message)
             })*/
-        axios.get(`${process.env.REACT_APP_SERVER_URL}books/${id}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/books/${id}`)
             .then(response => {
                 if (response.status === 200) {
                     console.log(JSON.stringify(response.data.bookInfo))
@@ -88,17 +89,17 @@ export default function SearchBookDetails({ currentUser }) {
     let handleWishlist = (e) => {
         e.preventDefault()
         setStatus('wishlist')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
     }
     let handleCurrentlyReading = (e) => {
         e.preventDefault()
         setStatus('started')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
     }
     let handleHaveRead = (e) => {
         e.preventDefault()
         setStatus('finished')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
     }
 
     if (!book) {
@@ -107,21 +108,22 @@ export default function SearchBookDetails({ currentUser }) {
     }
     return (
         <div>
+            <h2>Book Detail</h2>
             <div>
-                <img src={`http://covers.openlibrary.org/b/isbn/${book.api_id}-L.jpg`} alt={`cover of ${book.title}`} />
-                <h1>{book.title}</h1>
-                <p>By: {book.author}</p>
+                <img className="large-cover" src={`http://covers.openlibrary.org/b/isbn/${book.api_id}-L.jpg`} alt={`cover of ${book.title}`} />
+                <h2>{book.title}</h2>
+                <h4>By {book.author}</h4>
                 {/*<p>Publisher: {book.volumeInfo.publisher}</p>
                 <p>Published on: {book.volumeInfo.publishedDate}</p>*/}
                 <p>{description}</p>
                 <p><a href={`http://covers.openlibrary.org/b/isbn/${book.api_id}-L.jpg`}>Photo</a> from <a href={`http://openlibrary.org/isbn/${book.api_id}`}>Open Library</a></p>
                 {/*<p>Page Count: {book.volumeInfo.pageCount}</p>
                 <p>Average Rating: {book.volumeInfo.averageRating}</p>*/}
-                <form>
-                    <button onClick={handleWishlist}>Wishlist</button>
-                    <button onClick={handleCurrentlyReading}>Currently Reading</button>
-                    <button onClick={handleHaveRead}>Have Read</button>
-                </form>
+                <Form>
+                    <Button className="book-detail-button" variant="secondary" size="sm" onClick={handleWishlist}>Add to Wishlist</Button>
+                    <Button className="book-detail-button" variant="secondary" size="sm" onClick={handleCurrentlyReading}>Currently Reading</Button>
+                    <Button className="book-detail-button" variant="secondary" size="sm" onClick={handleHaveRead}>Have Read</Button>
+                </Form>
             </div>
             <div>
                 {displayReviews}

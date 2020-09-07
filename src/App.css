@@ -99,3 +99,15 @@
   margin: auto;
   max-width: 700px;
 }
+
+.large-cover{
+  margin: 15px;
+}
+
+.book-detail-button{
+  margin: 5px;
+}
+
+.navbar *{
+  margin: auto;
+}
