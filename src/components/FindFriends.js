@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import UserRow from './users_components/UserRow.js'
 import Axios from 'axios';
+import { Button, Form, Col } from 'react-bootstrap'
 
 export default function FindFriends(props) {
     //let sampleData = [{first_name: "bob", last_name: "brown", id:  "0294r2r", key:"0294r2r"}, {first_name: "Erika", last_name: "Svensworth", id: "2490fds", key: "2490fds"}];
@@ -61,17 +62,23 @@ export default function FindFriends(props) {
                     return <UserRow currentUser={props.currentUser} user={user} key={user._id} />
                 })}
             </div>
-            <div>
+            <div className="container">
                 <h2> Find New Friends: </h2>
-                <form onSubmit={searchUsers}>
-                    <label htmlFor="first_name">First Name:
-                        <input type="text" id="first_name" name="first_name" onChange={handleFirstName}/>
-                    </label>
-                    <label htmlFor="last_name">Last Name:
-                        <input type="text" id="last_name" name="last_name" onChange={handleLastName}/>
-                    </label>
-                    <input type="submit" value="Search"/>
-                </form>
+                <Form onSubmit={searchUsers}>
+                    <Form.Row>
+                        <Form.Group as={Col}>
+                            <Form.Label htmlFor="first_name">First Name:</Form.Label>
+                            <Form.Control type="text" id="first_name" name="first_name" onChange={handleFirstName}/>   
+                        </Form.Group>
+                        <Form.Group as={Col}>
+                            <Form.Label htmlFor="last_name">Last Name:</Form.Label>
+                            <Form.Control type="text" id="last_name" name="last_name" onChange={handleLastName}/>
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Group>
+                        <Button type="submit">Search</Button>
+                    </Form.Group>
+                </Form>
             </div>
         </>
     )

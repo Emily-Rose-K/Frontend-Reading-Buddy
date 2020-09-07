@@ -6,6 +6,7 @@
 import React , { useEffect, useState } from 'react'
 import { Redirect, useParams, useLocation } from 'react-router-dom'
 import Axios from 'axios';
+import { Button, Form, Col } from 'react-bootstrap'
 
 export default function ReaderExperience({ currentUser }) {
 
@@ -88,26 +89,40 @@ export default function ReaderExperience({ currentUser }) {
     return (
         <>
             <div className="container left-panel">
-                <h3>Current Book:</h3>
+                <h3>Update Reader Experience</h3>
                 <h4>{title}</h4>
-                <p>Author: {author}</p>
+                <p>by {author}</p>
             </div>
             <div className="container right-panel">
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="rating">Rating:</label>
-                    <select id="rating"  name="rating" defaultValue={rating} onChange={handleRating}>
-                        { ratingOptions.map(ratingOption => {
-                                return <option key={ratingOption} value={ratingOption}>{ratingOption}</option>
-                        })}
-                    </select>
-                    <label htmlFor="review">Review:</label>
-                    <input type="text" id="review" name="review" defaultValue={review} onChange={handleReview} />
-                    <label htmlFor="dateStarted">Date started:</label>
-                    <input type="date" id="dateStarted" defaultValue={dateStarted} onChange={handleDateStarted} />
-                    <label htmlFor="dateFinished">Date finished:</label>
-                    <input type="date" id="dateFinished" defaultValue={dateFinished} onChange={handleDateFinished}/>
-                    <input type="submit" value="Submit" />
-                </form>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Row>
+                        <Form.Group as={Col} xs="auto">
+                            <Form.Label htmlFor="dateStarted">Date started:</Form.Label>
+                            <Form.Control type="date" id="dateStarted" defaultValue={dateStarted} onChange={handleDateStarted} />
+                        </Form.Group>
+                        <Form.Group as={Col} xs="auto">
+                            <Form.Label htmlFor="dateFinished">Date finished:</Form.Label>
+                            <Form.Control type="date" id="dateFinished" defaultValue={dateFinished} onChange={handleDateFinished}/>
+                        </Form.Group>
+                        <Form.Group as={Col} xs="auto">
+                            <Form.Label htmlFor="rating">Rating:</Form.Label>
+                            <Form.Control as="select" id="rating" name="rating" defaultValue={rating} onChange={handleRating}>
+                                { ratingOptions.map(ratingOption => {
+                                        return <option key={ratingOption} value={ratingOption}>{ratingOption}</option>
+                                })}
+                            </Form.Control>
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Row>
+                        <Form.Group as={Col}>
+                            <Form.Label htmlFor="review">Review:</Form.Label>
+                            <Form.Control as="textarea" id="review" name="review" defaultValue={review} onChange={handleReview} />
+                        </Form.Group>
+                    </Form.Row>
+                    <Form.Group>
+                        <Button type="submit">Submit</Button>
+                    </Form.Group>
+                </Form>
             </div>
         </>
     )
