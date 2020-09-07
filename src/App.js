@@ -80,8 +80,12 @@ function App() {
       <Router>
         <Navbar  handleLogout={handleLogout} isAuthed={isAuthenticated} currentUser={currentUser}/>
         <Switch>
-          <Route exact path='/readerexperiences/:id/edit'>
-            <ReaderExperience />
+          <Route exact path='/readerexperiences/edit'>
+            {/* left id out of this url because if we instead search by book id and currentUser id, we can ensure user never gets to edit other people's reviews */}
+            {/* so this will instead take book id as a query string, and gets passed currentUser id as a prop */}
+            <ReaderExperience 
+              currentUser = {currentUser}
+            />
           </Route>
   
           <Route exact path='/users'>

@@ -4,10 +4,10 @@
 //       Right now, if a user mistakenly marks a book read and wants to erase it, they can't.  The new value reads as false and so is not updated.
 
 import React , { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Redirect, useParams, useLocation } from 'react-router-dom'
 import Axios from 'axios';
 
-export default function ReaderExperience() {
+export default function ReaderExperience({ currentUser }) {
 
     const ratingOptions = ["1", "2", "3", "4", "5"];
     let [ rating, setRating ] = useState("");
@@ -17,6 +17,7 @@ export default function ReaderExperience() {
     let [ title, setTitle ] = useState("");
     let [ author, setAuthor ] = useState("");
     let [ description, setDescription ] = useState("");
+    let [ shouldRedirect, setShouldRedirect ] = useState(false);
     let { id } = useParams();
 
     const handleRating = (e) => {
@@ -55,24 +56,35 @@ export default function ReaderExperience() {
             })
     }
 
+    //const useQuery = () => {
+    //    return new URLSearchParams(useLocation().search);
+    //}
+    let queryParams = new URLSearchParams(useLocation().search);
+
     useEffect(() => {
         if (!title){    // only make db call if necessary
-            Axios.get(`${process.env.REACT_APP_SERVER_URL}readerexperiences/${id}`)
+            Axios.get(`${process.env.REACT_APP_SERVER_URL}readerexperiences?book=${queryParams.get("book")}&user=${currentUser.id}`, )
                 .then(response => {
                     console.log(`response: ${JSON.stringify(response)}`);
                     if (response.status === 200){
+                        if (!response.data.user){ // if there is no readerExperience between the reader & this book, redirect to book detail page
+                            console.log(`Redirecting because this user has no relationship to this book`);
+                            setShouldRedirect(true);
+                        }
                         if (response.data.rating) setRating(response.data.rating);
                         if (response.data.review) setReview(response.data.review);
                         if (response.data.date_started) setDateStarted(response.data.date_started.substring(0,10));
                         if (response.data.date_finished) setDateFinished(response.data.date_finished.substring(0,10));
-                        setTitle(response.data.book.title);
-                        setAuthor(response.data.book.author);
-                        setDescription(response.data.book.description);
+                        if (response.data.book) setTitle(response.data.book.title);
+                        if (response.data.book) setAuthor(response.data.book.author);
+                        if (response.data.book) setDescription(response.data.book.description);
                     }
                 })
         }
     })
-
+    if (shouldRedirect){
+        return ( <Redirect to={`/book/${queryParams.get("book")}`} /> )
+    }
     return (
         <>
             <div className="container left-panel">

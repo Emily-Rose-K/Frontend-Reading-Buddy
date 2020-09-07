@@ -13,7 +13,7 @@ export default function ProfileReviews(props) {
                 return (
                     <div key={key} value={reviews._id}>
                         <p>
-                            <NavLink className="nav-link" to = {`/readerexperiences/${experience._id}/edit`}> {experience.book.title} </NavLink> by {experience.book.author}
+                            <NavLink className="nav-link" to = {`/readerexperiences/edit?book=${experience.book._id}`}> {experience.book.title} </NavLink> by {experience.book.author}
                         </p>
                         <p>{experience.rating} out of 5 stars</p>
                         <p>{experience.review}</p>

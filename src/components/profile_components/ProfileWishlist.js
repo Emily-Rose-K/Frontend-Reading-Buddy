@@ -12,7 +12,7 @@ export default function ProfileWishList(props) {
                 return(
                     <div key={key} value={experience._id}>
                         <p>
-                            <NavLink className="nav-link" to = {`/readerexperiences/${experience._id}/edit`}> {experience.book.title} </NavLink> by {experience.book.author}
+                            <NavLink className="nav-link" to = {`/readerexperiences/edit?book=${experience.book._id}`}> {experience.book.title} </NavLink> by {experience.book.author}
                         </p>
                     </div>
                 )
