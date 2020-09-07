@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Axios from 'axios'
 import { NavLink } from 'react-router-dom'
+import { Button } from 'react-bootstrap'
 
 
 /* 
@@ -21,8 +22,8 @@ export default function UserRow(props) {
     const handleClick = () => {
         console.log('props user: ' + JSON.stringify(props.user))
         let removeFlag = isFriend ? "?remove=true" : "";
-        console.log(`Calling ${process.env.REACT_APP_SERVER_URL}users/${props.currentUser.id}/update${removeFlag}`)
-        Axios.put(`${process.env.REACT_APP_SERVER_URL}users/${props.currentUser.id}/update${removeFlag}`, {friendId: props.user._id})
+        console.log(`Calling ${process.env.REACT_APP_SERVER_URL}/users/${props.currentUser.id}/update${removeFlag}`)
+        Axios.put(`${process.env.REACT_APP_SERVER_URL}/users/${props.currentUser.id}/update${removeFlag}`, {friendId: props.user._id})
             .then(updateResult => {
                 setIsFriend(!isFriend);
                 console.log("Added friend I think");
@@ -33,8 +34,8 @@ export default function UserRow(props) {
     }
     return(
         <div>
-            <NavLink className="nav-link" to={`/profile/${props.user._id}`}>{props.user.first_name} {props.user.last_name}</NavLink>
-            <button onClick={handleClick}>{buttonLabel}</button>
+            <NavLink className="friend-result-link" to={`/profile/${props.user._id}`}>{props.user.first_name} {props.user.last_name}</NavLink>
+            <Button variant="secondary" size="sm" onClick={handleClick}>{buttonLabel}</Button>
         </div>
     )
 }
