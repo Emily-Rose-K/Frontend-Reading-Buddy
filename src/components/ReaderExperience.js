@@ -4,7 +4,7 @@
 //       Right now, if a user mistakenly marks a book read and wants to erase it, they can't.  The new value reads as false and so is not updated.
 
 import React , { useEffect, useState } from 'react'
-import { Redirect, useParams, useLocation } from 'react-router-dom'
+import { Redirect, useLocation } from 'react-router-dom'
 import Axios from 'axios';
 import { Button, Form, Col } from 'react-bootstrap'
 
@@ -19,7 +19,7 @@ export default function ReaderExperience({ currentUser }) {
     let [ author, setAuthor ] = useState("");
     let [ description, setDescription ] = useState("");
     let [ shouldRedirect, setShouldRedirect ] = useState(false);
-    let { id } = useParams();
+    let { readerExperienceId, setReaderExperienceId } = useState("");
 
     const handleRating = (e) => {
         setRating(e.target.value)
@@ -48,7 +48,7 @@ export default function ReaderExperience({ currentUser }) {
         if (dateStarted) readerExperienceData.date_started = dateStarted;
         if (dateFinished) readerExperienceData.date_finished = dateFinished;
         console.log(`Sending update to backend: ${JSON.stringify(readerExperienceData)}`)
-        Axios.put(`${process.env.REACT_APP_SERVER_URL}readerexperiences/${response.data._id}`, readerExperienceData)
+        Axios.put(`${process.env.REACT_APP_SERVER_URL}readerexperiences/${readerExperienceId}}`, readerExperienceData)
             .then(res => {
                 console.log(`Update response from backend: ${JSON.stringify(res)}`)
             })
@@ -72,6 +72,7 @@ export default function ReaderExperience({ currentUser }) {
                             console.log(`Redirecting because this user has no relationship to this book`);
                             setShouldRedirect(true);
                         }
+                        if (response.data._id) setReaderExperienceId(response.data._id);
                         if (response.data.rating) setRating(response.data.rating);
                         if (response.data.review) setReview(response.data.review);
                         if (response.data.date_started) setDateStarted(response.data.date_started.substring(0,10));
