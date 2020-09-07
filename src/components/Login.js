@@ -3,6 +3,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import setAuthToken from '../utils/setAuthToken';
 import { NavLink, Redirect } from 'react-router-dom'
+import { Form, Button, Col, FormControl } from 'react-bootstrap'
 
 const Login = (props) => {  
     console.log(props)
@@ -23,8 +24,8 @@ const Login = (props) => {
         email: email,
         password: password
       }
-      console.log(`Posting to ${process.env.REACT_APP_SERVER_URL}users/login`)
-      axios.post(`${process.env.REACT_APP_SERVER_URL}users/login`, userData)
+      console.log(`Posting to ${process.env.REACT_APP_SERVER_URL}/users/login`)
+      axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, userData)
         .then(res => {
           const { token } = res.data;
           // Save to LocalStorage
@@ -48,20 +49,23 @@ const Login = (props) => {
 
     return (
         <div>
-            <form onSubmit ={handleSubmit}>
-                <label>
-                    Email:
-                    <input type="email" name="email" value={email} onChange={handleEmail} className="form-control" required />
-                </label>
-                <br></br>
-                <label>
-                    Password:
-                    <input type="password" name="password" value={password} onChange={handlePassword} className="form-control" required />
-                </label>
-                <br></br>
-                <input type="submit" value="Submit" />
-                <button onClick={handleClear}>Clear</button>
-            </form>
+            <h2>Log in</h2>
+            <Form className="login-form" onSubmit ={handleSubmit}>
+                <Col as={Col} xs="auto" >
+                  <Form.Label>Email:</Form.Label>
+                  <Form.Control type="email" name="email" value={email} onChange={handleEmail} className="form-control" required />                
+                </Col>
+                <Form.Group  as={Col} xs="auto" >
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control type="password"name="password" value={password} onChange={handlePassword} className="form-control" required />
+                </Form.Group>
+                <Form.Group>
+                  <Button type="submit">Submit</Button>
+                </Form.Group>
+                {/*<Form.Group>
+                  <Button onClick={handleClear}>Clear</Button>
+                </Form.Group>*/}
+            </Form>
             <h3>Need an Account?</h3>
             <NavLink className="nav-link" to = "/register">Sign up</NavLink>
         </div>

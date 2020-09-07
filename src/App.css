@@ -63,3 +63,34 @@
   vertical-align: top;
   border: 1px solid black;
 }
+
+.friend-result-link{
+  display: inline-block;
+  margin: 5px 15px;
+}
+
+.login-form{
+  margin: auto;
+  margin-bottom: 40px;
+  max-width: 400px;
+}
+
+.register-form{
+  margin: auto;
+  margin-bottom: 40px;
+  max-width: 500px;
+}
+
+.register-label{
+  padding: 7px 15px;
+  text-align: right;
+}
+
+.register-button{
+  margin: 5px 15px;
+}
+
+.friends-form{
+  margin: auto;
+  max-width: 500px;
+}
