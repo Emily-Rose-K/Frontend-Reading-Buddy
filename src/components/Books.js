@@ -20,7 +20,7 @@ export default function Books() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/books?title=${encodeURIComponent(searchTitle)}&author=${encodeURIComponent(searchAuthor)}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}books?title=${encodeURIComponent(searchTitle)}&author=${encodeURIComponent(searchAuthor)}`)
         //axios.get(`https://www.googleapis.com/books/v1/volumes?key=${process.env.REACT_APP_API_KEY}&q=${searchParam}`)
             .then(response => {
                 // check the response is good

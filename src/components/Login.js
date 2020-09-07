@@ -24,8 +24,8 @@ const Login = (props) => {
         email: email,
         password: password
       }
-      console.log(`Posting to ${process.env.REACT_APP_SERVER_URL}/users/login`)
-      axios.post(`${process.env.REACT_APP_SERVER_URL}/users/login`, userData)
+      console.log(`Posting to ${process.env.REACT_APP_SERVER_URL}users/login`)
+      axios.post(`${process.env.REACT_APP_SERVER_URL}users/login`, userData)
         .then(res => {
           const { token } = res.data;
           // Save to LocalStorage

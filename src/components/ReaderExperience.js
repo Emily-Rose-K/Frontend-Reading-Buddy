@@ -49,7 +49,7 @@ export default function ReaderExperience({ currentUser }) {
         if (dateStarted) readerExperienceData.date_started = dateStarted;
         if (dateFinished) readerExperienceData.date_finished = dateFinished;
         console.log(`Sending update to backend: ${JSON.stringify(readerExperienceData)}`)
-        Axios.put(`${process.env.REACT_APP_SERVER_URL}/readerexperiences/${readerExperienceId}}`, readerExperienceData)
+        Axios.put(`${process.env.REACT_APP_SERVER_URL}readerexperiences/${readerExperienceId}`, readerExperienceData)
             .then(res => {
                 console.log(`Update response from backend: ${JSON.stringify(res)}`)
             })
@@ -65,7 +65,7 @@ export default function ReaderExperience({ currentUser }) {
 
     useEffect(() => {
         if (!title){    // only make db call if necessary
-            Axios.get(`${process.env.REACT_APP_SERVER_URL}/readerexperiences?book=${queryParams.get("book")}&user=${currentUser.id}`, )
+            Axios.get(`${process.env.REACT_APP_SERVER_URL}readerexperiences?book=${queryParams.get("book")}&user=${currentUser.id}`, )
                 .then(response => {
                     console.log(`response: ${JSON.stringify(response)}`);
                     if (response.status === 200){

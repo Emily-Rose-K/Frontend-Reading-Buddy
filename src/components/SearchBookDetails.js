@@ -32,7 +32,7 @@ export default function SearchBookDetails({ currentUser }) {
             .catch(err => {
                 setError(err.message)
             })*/
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/books/${id}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}books/${id}`)
             .then(response => {
                 if (response.status === 200) {
                     console.log(JSON.stringify(response.data.bookInfo))
@@ -89,17 +89,17 @@ export default function SearchBookDetails({ currentUser }) {
     let handleWishlist = (e) => {
         e.preventDefault()
         setStatus('wishlist')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
     }
     let handleCurrentlyReading = (e) => {
         e.preventDefault()
         setStatus('started')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
     }
     let handleHaveRead = (e) => {
         e.preventDefault()
         setStatus('finished')
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
     }
 
     if (!book) {

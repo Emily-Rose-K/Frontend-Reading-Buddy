@@ -25,12 +25,12 @@ export default function FindFriends(props) {
             if (lastName) { query = `last_name=${lastName}` };
         }
         if (query) {
-            console.log(`Sending axios call to ${process.env.REACT_APP_SERVER_URL}/users?${query}`)
+            console.log(`Sending axios call to ${process.env.REACT_APP_SERVER_URL}users?${query}`)
             // find all users whose names match the query.  Then compare them to the user's friend list so we can put appropriate add/remove friend buttons by them
             // also remove the user from the search results entirely, if they happen to search for their own name
-            Axios.get(`${process.env.REACT_APP_SERVER_URL}/users?${query}`)
+            Axios.get(`${process.env.REACT_APP_SERVER_URL}users?${query}`)
                 .then(queryResponse => {
-                    Axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${props.currentUser.id}`)
+                    Axios.get(`${process.env.REACT_APP_SERVER_URL}users/${props.currentUser.id}`)
                     .then(friendListResponse => {
                         let myFriends = friendListResponse.data.user.friends;
                         queryResponse.data.searchResults.forEach((user, index) => {
