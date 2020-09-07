@@ -56,9 +56,9 @@ export default function FindFriends(props) {
 
     return(
         <>
-            <div className="container">
+            <div>
                 <h2> Find New Friends: </h2>
-                <Form onSubmit={searchUsers}>
+                <Form className="friends-form" onSubmit={searchUsers}>
                     <Form.Row>
                         <Form.Group as={Col}>
                             <Form.Label htmlFor="first_name">First Name:</Form.Label>
