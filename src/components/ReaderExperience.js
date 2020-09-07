@@ -4,9 +4,9 @@
 //       Right now, if a user mistakenly marks a book read and wants to erase it, they can't.  The new value reads as false and so is not updated.
 
 import React , { useEffect, useState } from 'react'
-import { Redirect, useLocation } from 'react-router-dom'
+import { Redirect, useLocation , NavLink } from 'react-router-dom'
 import Axios from 'axios';
-import { Button, Form, Col } from 'react-bootstrap'
+import { Button, Form, Container, Row, Col } from 'react-bootstrap'
 
 export default function ReaderExperience({ currentUser }) {
 
@@ -17,6 +17,7 @@ export default function ReaderExperience({ currentUser }) {
     let [ dateFinished, setDateFinished ] = useState("");
     let [ title, setTitle ] = useState("");
     let [ author, setAuthor ] = useState("");
+    let [ apiId, setApiId ] = useState("");
     let [ description, setDescription ] = useState("");
     let [ shouldRedirect, setShouldRedirect ] = useState(false);
     let [ readerExperienceId, setReaderExperienceId ] = useState("");
@@ -77,6 +78,7 @@ export default function ReaderExperience({ currentUser }) {
                         if (response.data.review) setReview(response.data.review);
                         if (response.data.date_started) setDateStarted(response.data.date_started.substring(0,10));
                         if (response.data.date_finished) setDateFinished(response.data.date_finished.substring(0,10));
+                        if (response.data.book) setApiId(response.data.book.api_id);
                         if (response.data.book) setTitle(response.data.book.title);
                         if (response.data.book) setAuthor(response.data.book.author);
                         if (response.data.book) setDescription(response.data.book.description);
@@ -91,8 +93,23 @@ export default function ReaderExperience({ currentUser }) {
         <>
             <div className="container left-panel">
                 <h3>Update Reader Experience</h3>
-                <h4>{title}</h4>
-                <p>by {author}</p>
+                <Container className="readerExperienceBookInfo">
+                    <Row className="justify-content-center">
+                        <Col xs="auto">
+                            <img className="small-cover" src={`http://covers.openlibrary.org/b/isbn/${apiId}-M.jpg`} alt={`cover of ${title}`} />
+                        </Col>
+                        <Col xs="auto">
+                            <h4>
+                                <NavLink className="nav-link" to = {`/book/${queryParams.get("book")}`}> {title} </NavLink>
+                            </h4>
+                            <p>by {author}</p>
+                            <p>
+                                <a href={`http://covers.openlibrary.org/b/isbn/${apiId}-L.jpg`}>Photo</a> from 
+                                <a href={`http://openlibrary.org/isbn/${apiId}`}>Open Library</a>
+                            </p>
+                        </Col>
+                    </Row>
+                </Container>
             </div>
             <div className="container right-panel">
                 <Form onSubmit={handleSubmit}>

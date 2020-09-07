@@ -104,10 +104,18 @@
   margin: 15px;
 }
 
+.small-cover{
+  height: 120px;
+}
+
 .book-detail-button{
   margin: 5px;
 }
 
 .navbar *{
+  margin: auto;
+}
+
+.readerExperienceBookInfo{
   margin: auto;
 }
