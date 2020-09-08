@@ -11,7 +11,7 @@ export default function Profile(props) {
 
     useEffect(() => {
         setRefresh(false)
-        axios.get(`${process.env.REACT_APP_SERVER_URL}users/${id}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}//users/${id}`)
             .then(response => {
                 if (response.status === 200) {
                     // rearrange backend response into shallower objects & pass to props
@@ -53,15 +53,15 @@ export default function Profile(props) {
         })
     }
     return (
-        <div className="half-pane">
+        <div className="top-pane">
             <h2>{props.userInfo.first_name} {props.userInfo.last_name}'s Profile</h2>
             <p>Number of books read this week: {readThisWeek} </p>
             <p>Number of books read this month: {readThisMonth}  </p>
-            <NavLink className="nav-link" to = {`/profile/${id}/friends`}> Friends </NavLink>
-            <NavLink className="nav-link" to = {`/profile/${id}/reviews`}> Reviews </NavLink>
-            <NavLink className="nav-link" to = {`/profile/${id}/wishlist`}> Wishlist </NavLink>
-            <NavLink className="nav-link" to = {`/profile/${id}/reading`}> Currently reading </NavLink>
-            <NavLink className="nav-link" to = {`/profile/${id}/haveread`}> Books I've Read </NavLink>
+            <NavLink className="profile-link" to = {`/profile/${id}/friends`}> Friends </NavLink>
+            <NavLink className="profile-link" to = {`/profile/${id}/reviews`}> Reviews </NavLink>
+            <NavLink className="profile-link" to = {`/profile/${id}/wishlist`}> Wishlist </NavLink>
+            <NavLink className="profile-link" to = {`/profile/${id}/reading`}> Currently reading </NavLink>
+            <NavLink className="profile-link" to = {`/profile/${id}/haveread`}> Books I've Read </NavLink>
         </div>
     )
 }

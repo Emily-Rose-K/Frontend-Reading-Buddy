@@ -14,7 +14,7 @@ export default function SearchBookDetails({ currentUser }) {
     let { id } = useParams()
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_SERVER_URL}books/${id}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}//books/${id}`)
             .then(response => {
                 if (response.status === 200) {
                     console.log(JSON.stringify(response.data.bookInfo))
@@ -44,9 +44,12 @@ export default function SearchBookDetails({ currentUser }) {
     let displayReviews = reviews.map((review, key) => {
         if (review.rating || review.review){
             return (
-                <div className="review" key={key}>
+                <div className="review white" key={key}>
                     {review.rating ? <p>{review.rating} stars </p> : <></>}
-                    <p>{review.review}</p>
+                    {review.review 
+                            ? <p>"{review.review}"</p>
+                            : <></>
+                        }
                     <p>-<NavLink to={`/profile/${review.user._id}/reviews`}>{review.user.first_name}</NavLink></p>
                 </div>
             )
@@ -63,7 +66,7 @@ export default function SearchBookDetails({ currentUser }) {
 
     let handleWishlist = (e) => {
         e.preventDefault()
-        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}//readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
             .then(response => {
                 if (response.data.status){
                     setStatus(response.data.status)
@@ -72,7 +75,7 @@ export default function SearchBookDetails({ currentUser }) {
     }
     let handleCurrentlyReading = (e) => {
         e.preventDefault()
-        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}//readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
         .then(response => {
             if (response.data.status){
                 setStatus(response.data.status)
@@ -81,7 +84,7 @@ export default function SearchBookDetails({ currentUser }) {
     }
     let handleHaveRead = (e) => {
         e.preventDefault()
-        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}//readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
         .then(response => {
             if (response.data.status){
                 setStatus(response.data.status)
@@ -94,7 +97,7 @@ export default function SearchBookDetails({ currentUser }) {
         return null;
     }
     return (
-        <div>
+        <div className="top-pane">
             <h2>Book Detail</h2>
             <div>
                 <img className="large-cover" src={`http://covers.openlibrary.org/b/isbn/${book.api_id}-L.jpg`} alt={`cover of ${book.title}`} />
@@ -140,6 +143,7 @@ export default function SearchBookDetails({ currentUser }) {
             <div>
                 {displayReviews}
             </div>
+            <br />
         </div>
         
     )

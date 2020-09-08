@@ -46,7 +46,7 @@ const Register = () => {
         email: email,
         password: password,
       }
-      axios.post(`${process.env.REACT_APP_SERVER_URL}users/register`, newUser)
+      axios.post(`${process.env.REACT_APP_SERVER_URL}//users/register`, newUser)
         .then(res => {
           console.log(res.data)
           setRedirect(true)
@@ -67,7 +67,7 @@ const Register = () => {
   if (redirect) return <Redirect to="/login" />
 
     return (
-      <>
+      <div className="top-pane">
         <h2>Register</h2>
         <Form className="register-form" dmethod="post" onSubmit={handleSubmit}>
             <Form.Group as={Row}> 
@@ -111,7 +111,7 @@ const Register = () => {
         </Form>
         <h3>Already have an Account?</h3>
         <NavLink className="nav-link" to="/login">Sign in</NavLink>
-      </>
+      </div>
     )
 }
 

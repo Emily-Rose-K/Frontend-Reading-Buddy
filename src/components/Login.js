@@ -24,7 +24,7 @@ const Login = (props) => {
         email: email,
         password: password
       }
-      axios.post(`${process.env.REACT_APP_SERVER_URL}users/login`, userData)
+      axios.post(`${process.env.REACT_APP_SERVER_URL}//users/login`, userData)
         .then(res => {
           const { token } = res.data;
           // Save to LocalStorage
@@ -42,7 +42,7 @@ const Login = (props) => {
     if (props.user) return <Redirect to= {`profile/${props.user.id}`} user={props.user} />
 
     return (
-        <div>
+        <div className="top-pane">
             <h2>Log in</h2>
             <Form className="login-form" onSubmit ={handleSubmit}>
                 <Form.Group as={Col} xs="auto" >

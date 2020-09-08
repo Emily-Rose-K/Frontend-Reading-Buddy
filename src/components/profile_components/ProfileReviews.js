@@ -15,7 +15,10 @@ export default function ProfileReviews(props) {
                             <NavLink className="nav-link" to = {`/readerexperiences/edit?book=${experience.book._id}`}> {experience.book.title} </NavLink> by {experience.book.author}
                         </p>
                         <p>{experience.rating} out of 5 stars</p>
-                        <p>{experience.review}</p>
+                        {experience.review 
+                            ? <p>"{experience.review}"</p>
+                            : <></>
+                        }
                     </div>
                 )
             }
@@ -29,8 +32,8 @@ export default function ProfileReviews(props) {
     } 
 
     return(
-        <div className="half-pane">
-            <h2>My book reviews</h2>
+        <div className="lower-pane">
+            <h3>My book reviews</h3>
             {reviews}
         </div>
     )

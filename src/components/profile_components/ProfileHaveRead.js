@@ -30,8 +30,8 @@ export default function ProfileHaveRead(props) {
     }
 
     return(
-        <div className="half-pane">
-            <h2>Books I've read</h2>
+        <div className="lower-pane">
+            <h3>Books I've read</h3>
             {readBooks}
         </div>
     )

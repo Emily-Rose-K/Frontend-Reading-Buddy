@@ -1,9 +1,9 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 const Navbar = (props) => {
     return(
-        <nav className="navbar">
+        <nav className="navbar" id="top-bar">
             <div>
                 <div className="">
                     {
@@ -22,7 +22,7 @@ const Navbar = (props) => {
                                 <NavLink className="nav-link" to = "/users">Find Friends</NavLink>
                             </li>
                             <li className="nav-item">
-                                <NavLink onClick={props.handleLogout} className="nav-link logout-link" to="/">Logout</NavLink>
+                                <Link onClick={props.handleLogout} className="nav-link logout-link" to="/">Logout</Link>
                             </li>
                         </ul>
                         : <ul className="nav-items">

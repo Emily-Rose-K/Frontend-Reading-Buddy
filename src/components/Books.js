@@ -18,7 +18,7 @@ export default function Books() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.get(`${process.env.REACT_APP_SERVER_URL}books?title=${encodeURIComponent(searchTitle)}&author=${encodeURIComponent(searchAuthor)}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}//books?title=${encodeURIComponent(searchTitle)}&author=${encodeURIComponent(searchAuthor)}`)
             .then(response => {
                 // check the response is good
                 if (response.status === 200) {
@@ -53,7 +53,7 @@ export default function Books() {
     })
 
     return (
-        <div>
+        <div className="top-pane">
             <h2>Search for Books:</h2>
             <Form className="books-form" onSubmit={handleSubmit} >
                 <Form.Row>
@@ -78,9 +78,9 @@ export default function Books() {
                         {displayBooks}
                     </div>
                     <br></br>
-                    <Button variant="secondary" size="sm" onClick={handleClear}>Clear</Button> 
+                    <Button id="bottom-button" variant="secondary" size="sm" onClick={handleClear}>Clear</Button> 
                 </>
-                : <></>}      
+                : <></>}
         </div>
         
     )

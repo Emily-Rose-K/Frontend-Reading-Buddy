@@ -27,8 +27,8 @@ export default function ProfileWishList(props) {
     }
 
     return(
-        <div className="half-pane">
-            <h2>Books I'd like to read</h2>
+        <div className="lower-pane">
+            <h3>Books I'd like to read</h3>
             {wishedBooks}
         </div>
     )
