@@ -1,6 +1,5 @@
-import React, { useReducer } from 'react'
+import React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
-import { propTypes } from 'react-bootstrap/esm/Image'
 
 export default function ProfileFriends(props) {
 

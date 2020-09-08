@@ -1,6 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+//TO DO: This component's code structure is identical to ProfileReading and ProfileWishlist, and nearly identical to Profile Reviews.
+//If we can think of variable names that are informative across all those component types, we should combine the components into one.
+
 export default function ProfileHaveRead(props) {
 
     let readBooks = [];

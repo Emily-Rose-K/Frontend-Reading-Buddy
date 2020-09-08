@@ -1,7 +1,4 @@
 // TODO: Component should redirect backwards after form submission, but that looks like it will take more work in higher-level files
-// TODO: Style
-// TODO: Change update method to update CHANGED fields instead of TRUE fields.  
-//       Right now, if a user mistakenly marks a book read and wants to erase it, they can't.  The new value reads as false and so is not updated.
 
 import React , { useEffect, useState } from 'react'
 import { Redirect, useLocation , NavLink } from 'react-router-dom'
@@ -10,7 +7,7 @@ import { Button, Form, Container, Row, Col } from 'react-bootstrap'
 
 export default function ReaderExperience({ currentUser }) {
 
-    const ratingOptions = ["1", "2", "3", "4", "5"];
+    const ratingOptions = ["", "1", "2", "3", "4", "5"];
     const [ rating, setRating ] = useState("");
     const [ review, setReview ] = useState("");
     const [ dateStarted, setDateStarted ] = useState("");
@@ -38,6 +35,7 @@ export default function ReaderExperience({ currentUser }) {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
+        // infer correct status attribute from user's entries for other attributes
         let status = "wishlist";
         if ([review, rating, dateFinished].some((item) => {return item})) { // is true if review || rating || dateFinished
             status = "finished"
@@ -49,8 +47,7 @@ export default function ReaderExperience({ currentUser }) {
         if (review) readerExperienceData.review = review;
         if (dateStarted) readerExperienceData.date_started = dateStarted;
         if (dateFinished) readerExperienceData.date_finished = dateFinished;
-        console.log(`Sending update to backend: ${JSON.stringify(readerExperienceData)}`)
-        Axios.put(`${process.env.REACT_APP_SERVER_URL}readerexperiences/${readerExperienceId}`, readerExperienceData)
+        Axios.put(`${process.env.REACT_APP_SERVER_URL}/readerexperiences/${readerExperienceId}`, readerExperienceData)
             .then(response => {
                 if (response.data.updatedReaderExperience){
                     setUpdateSuccessful(true);
@@ -62,14 +59,11 @@ export default function ReaderExperience({ currentUser }) {
             })
     }
 
-    //const useQuery = () => {
-    //    return new URLSearchParams(useLocation().search);
-    //}
     let queryParams = new URLSearchParams(useLocation().search);
 
     useEffect(() => {
         if (!title){    // only make db call if necessary
-            Axios.get(`${process.env.REACT_APP_SERVER_URL}readerexperiences?book=${queryParams.get("book")}&user=${currentUser.id}`, )
+            Axios.get(`${process.env.REACT_APP_SERVER_URL}/readerexperiences?book=${queryParams.get("book")}&user=${currentUser.id}`, )
                 .then(response => {
                     console.log(`response: ${JSON.stringify(response)}`);
                     if (response.status === 200){
@@ -95,9 +89,9 @@ export default function ReaderExperience({ currentUser }) {
     }
     return (
         <>
-            <div className="container left-panel">
+            <div className="container">
                 <h3>Update Reader Experience</h3>
-                <Container className="readerExperienceBookInfo">
+                <Container className="reader-experience-book-info">
                     <Row className="justify-content-center">
                         <Col xs="auto">
                             <img className="small-cover" src={`http://covers.openlibrary.org/b/isbn/${apiId}-M.jpg`} alt={`cover of ${title}`} />
@@ -114,7 +108,7 @@ export default function ReaderExperience({ currentUser }) {
                     </Row>
                 </Container>
             </div>
-            <div className="container right-panel">
+            <div className="container">
                 <Form onSubmit={handleSubmit}>
                     <Form.Row>
                         <Form.Group as={Col} xs="auto">
@@ -127,7 +121,7 @@ export default function ReaderExperience({ currentUser }) {
                         </Form.Group>
                         <Form.Group as={Col} xs="auto">
                             <Form.Label htmlFor="rating">Rating:</Form.Label>
-                            <Form.Control as="select" id="rating" name="rating" value={rating} onChange={handleRating}>
+                            <Form.Control as="select" id="rating" value={rating} onChange={handleRating}>
                                 { ratingOptions.map(ratingOption => {
                                         return <option key={ratingOption} value={ratingOption}>{ratingOption}</option>
                                 })}
@@ -137,7 +131,7 @@ export default function ReaderExperience({ currentUser }) {
                     <Form.Row>
                         <Form.Group as={Col}>
                             <Form.Label htmlFor="review">Review:</Form.Label>
-                            <Form.Control as="textarea" id="review" name="review" defaultValue={review} onChange={handleReview} />
+                            <Form.Control as="textarea" id="review" defaultValue={review} onChange={handleReview} />
                         </Form.Group>
                     </Form.Row>
                     <Form.Group>

@@ -1,6 +1,5 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import ReaderExperience from '../ReaderExperience'
 
 export default function ProfileReviews(props) {
 
@@ -8,7 +7,7 @@ export default function ProfileReviews(props) {
     let anythingReviewed = false;
     if (props.userReaderExperiences.length){
         reviews = props.userReaderExperiences.map((experience, key) => {
-            if (experience.review){
+            if (experience.review || experience.rating){
                 anythingReviewed = true;
                 return (
                     <div className="review" key={key} value={reviews._id}>

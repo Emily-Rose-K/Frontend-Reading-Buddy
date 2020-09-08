@@ -22,25 +22,25 @@ import ProfileReviews from './components/profile_components/ProfileReviews';
 import ProfileHaveRead from './components/profile_components/ProfileHaveRead';
 import ProfileReading from './components/profile_components/ProfileReading';
 import ProfileWishlist from './components/profile_components/ProfileWishlist';
-import Axios from 'axios';
-import { Link } from 'react-router-dom'
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-
   const user = localStorage.getItem(`jwtToken`);
-  return <Route {...rest} render={(props) => (
-      user
-          ? <Component {...rest} {...props} />
-          : <Redirect to='/login' />
-      )} 
-  />
+  console.log("in PrivateRoute with user jwt " + JSON.stringify(user))
+  return user
+    ? <Route {...rest} render={(props) => <Component {...rest} {...props} /> } />
+    : <Redirect to='/login' />
+//  return <Route {...rest} render={(props) => (
+//      user
+//          ? <Component {...rest} {...props} />
+//          : <Redirect to='/login' />
+//      )} 
+//  />
 }
 
 function App() {
   let [currentUser, setCurrentUser] = useState("")
   let [isAuthenticated, setIsAuthenticated] = useState(true)
-  let [profileInfo, setProfileInfo] = useState({})  // phase this out
   let [userInfo, setUserInfo] = useState({})
   let [userReaderExperiences, setUserReaderExperiences] = useState([])
   let [userBooks, setUserBooks] = useState([])
@@ -80,9 +80,13 @@ function App() {
       <Router>
         <Navbar  handleLogout={handleLogout} isAuthed={isAuthenticated} currentUser={currentUser}/>
         <Switch>
+
           <Route exact path='/readerexperiences/edit'>
-            {/* left id out of this url because if we instead search by book id and currentUser id, we can ensure user never gets to edit other people's reviews */}
-            {/* so this will instead take book id as a query string, and gets passed currentUser id as a prop */}
+            {/* 
+              I left id out of this url because if we instead search by book id and currentUser id, we can ensure user never gets to edit other people's reviews
+              The bookId + currentUser id search will return no results, and we can then redirect the user to the general book detail page
+              so this route will instead be passed book id as a query string, and be passed currentUser as a prop 
+            */}
             <ReaderExperience 
               currentUser = {currentUser}
             />
@@ -100,7 +104,7 @@ function App() {
             />
           </Route>
 
-          <Route exact path='/profile/:id'>
+          <PrivateRoute exact path='/profile/:id'>
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
@@ -112,8 +116,10 @@ function App() {
               currentUser={currentUser} 
               userBooks={userBooks}
             />
-          </Route>
+          </PrivateRoute>
+
           <Route path='/register' component = {Register} />
+
           <Route path='/login' render ={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} setIsAuthenticated={setIsAuthenticated} user={currentUser} /> } />
           {/* <PrivateRoute path='/profile' render = {(props) => <Profile {...props} user={currentUser} /> }/> */}
 
