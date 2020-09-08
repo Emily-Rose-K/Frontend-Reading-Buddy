@@ -102,10 +102,12 @@
 
 .large-cover{
   margin: 15px;
+  box-shadow: 2px 5px 10px #444444;
 }
 
 .small-cover{
   height: 120px;
+  box-shadow: 2px 4px 8px #444444;
 }
 
 .book-detail-button{
@@ -118,4 +120,21 @@
 
 .readerExperienceBookInfo{
   margin: auto;
+}
+
+.review {
+  margin: 20px auto;
+  padding: 12px 4px 4px 4px;
+  background-color: #e0e0e0;
+  border: 2px solid black;
+  border-radius: 7px;
+  max-width: 480px;
+  box-shadow: 2px 5px 10px #444444;
+}
+
+.button-link{
+  background-color: #6c757d;
+  color: white;
+  padding: 4px 8px;
+
 }

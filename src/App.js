@@ -96,7 +96,7 @@ function App() {
           
           <Route exact path='/book/:id'>
             <SearchBookDetails
-              currentUser={currentUser} 
+              currentUser = {currentUser} 
             />
           </Route>
 

@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { Redirect, useParams } from 'react-router-dom'
+import { Redirect, useParams, NavLink } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
 
 export default function SearchBookDetails({ currentUser }) {
     const [book, setBook] = useState({})
     const [error, setError] = useState(null);
     const [reviews, setReviews] = useState([]);
-    const [status, setStatus] = useState('');
     const [description, setDescription] = useState('')
+    const [status, setStatus] = useState("");
     
 
     let { id } = useParams()
@@ -38,26 +38,13 @@ export default function SearchBookDetails({ currentUser }) {
                     console.log(JSON.stringify(response.data.bookInfo))
                     setBook(response.data.bookInfo)
                     setReviews(response.data.bookInfo.readerExperiences)
-                    /*console.log(`About to call https://openlibrary.org/api/books?bibkeys=ISBN:${response.data.bookInfo.api_id}&jscmd=details`)
-                    axios.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${response.data.bookInfo.api_id}&jscmd=details`, {
-                        headers: {'Content-Type': 'text/plain'}
-                    })
-                        .then(openLibraryResponse => {
-                            console.log(`working with ${JSON.stringify(openLibraryResponse)}`)
-                            setDescription(JSON.stringify(openLibraryResponse[`ISBN:0439358078"`]))
-                        })
-                        .catch(err => {
-                            console.log(err)
-                        })*/
                     const bookDescriptionRequest = axios.create();
                     bookDescriptionRequest.defaults.headers.common = {};
                     bookDescriptionRequest.defaults.headers.common.accept = 'application/json';
                     bookDescriptionRequest.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${response.data.bookInfo.api_id}&jscmd=details&format=json`)
                         .then(openLibraryResponse => {
-                            console.log(`working with ${JSON.stringify(openLibraryResponse.data[`ISBN:${response.data.bookInfo.api_id}`].details.description.value)}`)
+                            //console.log(`working with ${JSON.stringify(openLibraryResponse.data[`ISBN:${response.data.bookInfo.api_id}`].details.description.value)}`)
                             let rawDescription = JSON.parse(JSON.stringify(openLibraryResponse.data[`ISBN:${response.data.bookInfo.api_id}`].details.description.value))
-                            //rawDescription = rawDescription.replace(/\\r/, "blah")
-                            //rawDescription = rawDescription.replace(/\\n/, "bleh")
                             setDescription(rawDescription)
                         })
                         .catch(err => {
@@ -79,27 +66,51 @@ export default function SearchBookDetails({ currentUser }) {
     })*/
 
     let displayReviews = reviews.map((review, key) => {
-        return (
-            <div key={key}>
-                <p>{review.user.user_name} rates this book: {review.rating}</p>
-                <p>{review.review}</p>
-            </div>
-        )
+        if (review.rating || review.review){
+            return (
+                <div className="review" key={key}>
+                    {review.rating ? <p>{review.rating} stars </p> : <></>}
+                    <p>{review.review}</p>
+                    <p>-<NavLink to={`/profile/${review.user._id}/reviews`}>{review.user.first_name}</NavLink></p>
+                </div>
+            )
+        }
     })
+
+    if (!status){
+        reviews.forEach(experience => {
+            if (experience.user._id === currentUser.id){
+                setStatus(experience.status);
+            }
+        })
+    }
+
     let handleWishlist = (e) => {
         e.preventDefault()
-        setStatus('wishlist')
         axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
+            .then(response => {
+                if (response.data.status){
+                    setStatus(response.data.status)
+                }
+            })
     }
     let handleCurrentlyReading = (e) => {
         e.preventDefault()
-        setStatus('started')
         axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
+        .then(response => {
+            if (response.data.status){
+                setStatus(response.data.status)
+            }
+        })
     }
     let handleHaveRead = (e) => {
         e.preventDefault()
-        setStatus('finished')
         axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
+        .then(response => {
+            if (response.data.status){
+                setStatus(response.data.status)
+            }
+        })
     }
 
     if (!book) {
@@ -120,9 +131,34 @@ export default function SearchBookDetails({ currentUser }) {
                 {/*<p>Page Count: {book.volumeInfo.pageCount}</p>
                 <p>Average Rating: {book.volumeInfo.averageRating}</p>*/}
                 <Form>
-                    <Button className="book-detail-button" variant="secondary" size="sm" onClick={handleWishlist}>Add to Wishlist</Button>
-                    <Button className="book-detail-button" variant="secondary" size="sm" onClick={handleCurrentlyReading}>Currently Reading</Button>
-                    <Button className="book-detail-button" variant="secondary" size="sm" onClick={handleHaveRead}>Have Read</Button>
+                    <Form.Check 
+                        onClick={handleWishlist} 
+                        inline 
+                        name="status" 
+                        label="Wishlist" 
+                        type="radio" 
+                        checked={status === "wishlist"}>
+                    </Form.Check>
+                    <Form.Check 
+                        onClick={handleCurrentlyReading} 
+                        inline 
+                        name="status" 
+                        label="Currently Reading" 
+                        type="radio" 
+                        checked={status === "started"}>
+                    </Form.Check>
+                    <Form.Check 
+                        onClick={handleHaveRead} 
+                        inline 
+                        name="status" 
+                        label="Have Read" 
+                        type="radio" 
+                        checked={status === "finished"}>
+                    </Form.Check>
+                    {status === "finished" 
+                        ? <NavLink to={`/readerexperiences/edit?book=${book._id}`}><Button size="sm">Write a review!</Button></NavLink>
+                        : ""
+                    }
                 </Form>
             </div>
             <div>

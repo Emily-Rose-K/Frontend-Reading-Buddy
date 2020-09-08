@@ -10,7 +10,7 @@ export default function ProfileHaveRead(props) {
             if (experience.status === "finished"){
                 anythingRead = true;
                 return(
-                    <div key={key} value={experience._id}>
+                    <div className="review" key={key} value={experience._id}>
                         <p>
                             <NavLink className="nav-link" to = {`/readerexperiences/edit?book=${experience.book._id}`}> {experience.book.title} </NavLink> by {experience.book.author}
                         </p>

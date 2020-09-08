@@ -11,16 +11,17 @@ import { Button, Form, Container, Row, Col } from 'react-bootstrap'
 export default function ReaderExperience({ currentUser }) {
 
     const ratingOptions = ["1", "2", "3", "4", "5"];
-    let [ rating, setRating ] = useState("");
-    let [ review, setReview ] = useState("");
-    let [ dateStarted, setDateStarted ] = useState("");
-    let [ dateFinished, setDateFinished ] = useState("");
-    let [ title, setTitle ] = useState("");
-    let [ author, setAuthor ] = useState("");
-    let [ apiId, setApiId ] = useState("");
-    let [ description, setDescription ] = useState("");
-    let [ shouldRedirect, setShouldRedirect ] = useState(false);
-    let [ readerExperienceId, setReaderExperienceId ] = useState("");
+    const [ rating, setRating ] = useState("");
+    const [ review, setReview ] = useState("");
+    const [ dateStarted, setDateStarted ] = useState("");
+    const [ dateFinished, setDateFinished ] = useState("");
+    const [ title, setTitle ] = useState("");
+    const [ author, setAuthor ] = useState("");
+    const [ apiId, setApiId ] = useState("");
+    const [ description, setDescription ] = useState("");
+    const [ shouldRedirect, setShouldRedirect ] = useState(false);
+    const [ readerExperienceId, setReaderExperienceId ] = useState("");
+    const [ updateSuccessful, setUpdateSuccessful ] = useState(false);
 
     const handleRating = (e) => {
         setRating(e.target.value)
@@ -38,7 +39,7 @@ export default function ReaderExperience({ currentUser }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         let status = "wishlist";
-        if (review || dateFinished) {
+        if ([review, rating, dateFinished].some((item) => {return item})) { // is true if review || rating || dateFinished
             status = "finished"
         } else if (dateStarted) {
             status = "started"
@@ -50,8 +51,11 @@ export default function ReaderExperience({ currentUser }) {
         if (dateFinished) readerExperienceData.date_finished = dateFinished;
         console.log(`Sending update to backend: ${JSON.stringify(readerExperienceData)}`)
         Axios.put(`${process.env.REACT_APP_SERVER_URL}readerexperiences/${readerExperienceId}`, readerExperienceData)
-            .then(res => {
-                console.log(`Update response from backend: ${JSON.stringify(res)}`)
+            .then(response => {
+                if (response.data.updatedReaderExperience){
+                    setUpdateSuccessful(true);
+                }
+                console.log(`Update response from backend: ${JSON.stringify(response)}`)
             })
             .catch(err => {
                 console.log(`error submitting update request: ${err}`)
@@ -104,8 +108,7 @@ export default function ReaderExperience({ currentUser }) {
                             </h4>
                             <p>by {author}</p>
                             <p>
-                                <a href={`http://covers.openlibrary.org/b/isbn/${apiId}-L.jpg`}>Photo</a> from 
-                                <a href={`http://openlibrary.org/isbn/${apiId}`}>Open Library</a>
+                                <a href={`http://covers.openlibrary.org/b/isbn/${apiId}-L.jpg`}>Photo</a> from <a href={`http://openlibrary.org/isbn/${apiId}`}>Open Library</a>
                             </p>
                         </Col>
                     </Row>
@@ -124,7 +127,7 @@ export default function ReaderExperience({ currentUser }) {
                         </Form.Group>
                         <Form.Group as={Col} xs="auto">
                             <Form.Label htmlFor="rating">Rating:</Form.Label>
-                            <Form.Control as="select" id="rating" name="rating" defaultValue={rating} onChange={handleRating}>
+                            <Form.Control as="select" id="rating" name="rating" value={rating} onChange={handleRating}>
                                 { ratingOptions.map(ratingOption => {
                                         return <option key={ratingOption} value={ratingOption}>{ratingOption}</option>
                                 })}
@@ -141,6 +144,7 @@ export default function ReaderExperience({ currentUser }) {
                         <Button type="submit">Submit</Button>
                     </Form.Group>
                 </Form>
+                {updateSuccessful ? <p>Update Successful!</p> : <></>}
             </div>
         </>
     )
