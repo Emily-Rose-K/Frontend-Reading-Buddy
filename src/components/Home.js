@@ -53,7 +53,7 @@ function ControlledCarusel() {
 export default function Home() {
     /*const handleSeed = (e) => {   // When called, this function triggers the backend to mass-seed books into the db
         e.preventDefault();
-        Axios.post(`${process.env.REACT_APP_SERVER_URL}/books`)
+        Axios.post(`${process.env.REACT_APP_SERVER_URL}books`)
             .then(result => {
                 console.log(`Seed request sent with no errors.  Result: ${JSON.stringify(result)}`)
             })

@@ -26,7 +26,6 @@ import ProfileWishlist from './components/profile_components/ProfileWishlist';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = localStorage.getItem(`jwtToken`);
-  console.log("in PrivateRoute with user jwt " + JSON.stringify(user))
   return user
     ? <Route {...rest} render={(props) => <Component {...rest} {...props} /> } />
     : <Redirect to='/login' />
@@ -81,7 +80,7 @@ function App() {
         <Navbar  handleLogout={handleLogout} isAuthed={isAuthenticated} currentUser={currentUser}/>
         <Switch>
 
-          <Route exact path='/readerexperiences/edit'>
+          <PrivateRoute exact path='/readerexperiences/edit'>
             {/* 
               I left id out of this url because if we instead search by book id and currentUser id, we can ensure user never gets to edit other people's reviews
               The bookId + currentUser id search will return no results, and we can then redirect the user to the general book detail page
@@ -90,19 +89,19 @@ function App() {
             <ReaderExperience 
               currentUser = {currentUser}
             />
-          </Route>
+          </PrivateRoute>
   
-          <Route exact path='/users'>
+          <PrivateRoute exact path='/users'>
             <FindFriends currentUser={currentUser}/>
-          </Route>
+          </PrivateRoute>
 
-          <Route path='/books' component = {Books} />
+          <PrivateRoute path='/books' component = {Books} />
           
-          <Route exact path='/book/:id'>
+          <PrivateRoute exact path='/book/:id'>
             <SearchBookDetails
               currentUser = {currentUser} 
             />
-          </Route>
+          </PrivateRoute>
 
           <PrivateRoute exact path='/profile/:id'>
             <Profile 
@@ -123,7 +122,7 @@ function App() {
           <Route path='/login' render ={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} setIsAuthenticated={setIsAuthenticated} user={currentUser} /> } />
           {/* <PrivateRoute path='/profile' render = {(props) => <Profile {...props} user={currentUser} /> }/> */}
 
-          <Route path={`/profile/:id/friends`}>
+          <PrivateRoute path={`/profile/:id/friends`}>
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
@@ -138,9 +137,9 @@ function App() {
               userFriends={userFriends}
               currentUser={currentUser}
             />
-          </Route>
+          </PrivateRoute>
 
-          <Route path={`/profile/:id/reviews`}>
+          <PrivateRoute path={`/profile/:id/reviews`}>
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
@@ -153,9 +152,9 @@ function App() {
             <ProfileReviews 
               userReaderExperiences={userReaderExperiences}
             />
-          </Route>
+          </PrivateRoute>
 
-          <Route path={`/profile/:id/wishlist`}>
+          <PrivateRoute path={`/profile/:id/wishlist`}>
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
@@ -168,9 +167,9 @@ function App() {
             <ProfileWishlist 
               userReaderExperiences={userReaderExperiences}
             /> 
-          </Route>
+          </PrivateRoute>
 
-          <Route path={`/profile/:id/reading`}>
+          <PrivateRoute path={`/profile/:id/reading`}>
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
@@ -183,9 +182,9 @@ function App() {
             <ProfileReading 
               userReaderExperiences={userReaderExperiences}
             /> 
-          </Route>
+          </PrivateRoute>
 
-          <Route path={`/profile/:id/haveread`}>
+          <PrivateRoute path={`/profile/:id/haveread`}>
             <Profile 
               userInfo={userInfo} 
               setUserInfo={setUserInfo}
@@ -198,7 +197,7 @@ function App() {
             <ProfileHaveRead 
               userReaderExperiences={userReaderExperiences}
             />
-          </Route>
+          </PrivateRoute>
 
           <Route path='/' exact component={Home} />
 

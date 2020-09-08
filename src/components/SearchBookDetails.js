@@ -14,7 +14,7 @@ export default function SearchBookDetails({ currentUser }) {
     let { id } = useParams()
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_SERVER_URL}/books/${id}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}books/${id}`)
             .then(response => {
                 if (response.status === 200) {
                     console.log(JSON.stringify(response.data.bookInfo))
@@ -63,7 +63,7 @@ export default function SearchBookDetails({ currentUser }) {
 
     let handleWishlist = (e) => {
         e.preventDefault()
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "wishlist", book: book._id, user: currentUser.id})
             .then(response => {
                 if (response.data.status){
                     setStatus(response.data.status)
@@ -72,7 +72,7 @@ export default function SearchBookDetails({ currentUser }) {
     }
     let handleCurrentlyReading = (e) => {
         e.preventDefault()
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "started", book: book._id, user: currentUser.id})
         .then(response => {
             if (response.data.status){
                 setStatus(response.data.status)
@@ -81,7 +81,7 @@ export default function SearchBookDetails({ currentUser }) {
     }
     let handleHaveRead = (e) => {
         e.preventDefault()
-        axios.post(`${process.env.REACT_APP_SERVER_URL}/readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
+        axios.post(`${process.env.REACT_APP_SERVER_URL}readerExperiences`, {status: "finished", book: book._id, user: currentUser.id})
         .then(response => {
             if (response.data.status){
                 setStatus(response.data.status)
