@@ -30,10 +30,10 @@ export default function FindFriends(props) {
             // also remove the user from the search results entirely, if they happen to search for their own name
             Axios.get(`${process.env.REACT_APP_SERVER_URL}users?${query}`)
                 .then(queryResponse => {
-                    Axios.get(`${process.env.REACT_APP_SERVER_URL}users/${props.currentUser.id}`)
+                    Axios.get(`${process.env.REACT_APP_SERVER_URL}/users/${props.currentUser.id}`)
                     .then(friendListResponse => {
-                        let myFriends = friendListResponse.data.user.friends;
-                        queryResponse.data.searchResults.forEach((user, index) => {
+                        let myFriends = friendListResponse.data.user.friends.map(friend => {return friend._id});
+                        queryResponse.data.searchResults.forEach((user, index) => { // queryResponse is the list of search results.  friendListResponse is the user's friends
                             if (myFriends.includes(user._id)){
                                 user.isFriend = true;
                             } else if (user._id === props.currentUser.id){
