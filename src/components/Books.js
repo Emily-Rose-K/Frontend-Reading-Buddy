@@ -18,7 +18,7 @@ export default function Books() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.get(`${process.env.REACT_APP_SERVER_URL}//books?title=${encodeURIComponent(searchTitle)}&author=${encodeURIComponent(searchAuthor)}`)
+        axios.get(`${process.env.REACT_APP_SERVER_URL}/books?title=${encodeURIComponent(searchTitle)}&author=${encodeURIComponent(searchAuthor)}`)
             .then(response => {
                 // check the response is good
                 if (response.status === 200) {

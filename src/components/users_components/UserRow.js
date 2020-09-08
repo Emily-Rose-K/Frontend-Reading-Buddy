@@ -19,7 +19,7 @@ export default function UserRow(props) {
 
     const handleClick = () => {
         let removeFlag = isFriend ? "?remove=true" : "";
-        Axios.put(`${process.env.REACT_APP_SERVER_URL}//users/${props.currentUser.id}/update${removeFlag}`, {friendId: props.user._id})
+        Axios.put(`${process.env.REACT_APP_SERVER_URL}/users/${props.currentUser.id}/update${removeFlag}`, {friendId: props.user._id})
             .then(updateResult => {
                 setIsFriend(!isFriend);
             })
