@@ -1,6 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+//TO DO: This component's code structure is identical to ProfileReading and ProfileWishlist, and nearly identical to Profile Reviews.
+//If we can think of variable names that are informative across all those component types, we should combine the components into one.
+
 export default function ProfileHaveRead(props) {
 
     let readBooks = [];
@@ -10,9 +13,9 @@ export default function ProfileHaveRead(props) {
             if (experience.status === "finished"){
                 anythingRead = true;
                 return(
-                    <div key={key} value={experience._id}>
+                    <div className="review" key={key} value={experience._id}>
                         <p>
-                            <NavLink className="nav-link" to = {`/readerexperiences/${experience._id}/edit`}> {experience.book.title} </NavLink> by {experience.book.author}
+                            <NavLink className="nav-link" to = {`/readerexperiences/edit?book=${experience.book._id}`}> {experience.book.title} </NavLink> by {experience.book.author}
                         </p>
                     </div>
                 )
@@ -27,8 +30,8 @@ export default function ProfileHaveRead(props) {
     }
 
     return(
-        <div className="half-pane">
-            <h2>Books I've read</h2>
+        <div className="lower-pane">
+            <h3>Books I've read</h3>
             {readBooks}
         </div>
     )

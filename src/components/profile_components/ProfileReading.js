@@ -10,9 +10,9 @@ export default function ProfileWishList(props) {
             if (experience.status === "started"){
                 wantAnything = true;
                 return(
-                    <div key={key} value={experience._id}>
+                    <div className="review" key={key} value={experience._id}>
                         <p>
-                            <NavLink className="nav-link" to = {`/readerexperiences/${experience._id}/edit`}> {experience.book.title} </NavLink> by {experience.book.author}
+                            <NavLink className="nav-link" to = {`/readerexperiences/edit?book=${experience.book._id}`}> {experience.book.title} </NavLink> by {experience.book.author}
                         </p>
                     </div>
                 )
@@ -27,8 +27,8 @@ export default function ProfileWishList(props) {
     }
 
     return(
-        <div className="half-pane">
-            <h2>Books I'm reading</h2>
+        <div className="lower-pane">
+            <h3>Books I'm reading</h3>
             {currentBooks}
         </div>
     )

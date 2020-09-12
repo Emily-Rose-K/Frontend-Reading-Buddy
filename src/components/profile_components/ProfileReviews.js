@@ -1,6 +1,5 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import ReaderExperience from '../ReaderExperience'
 
 export default function ProfileReviews(props) {
 
@@ -8,15 +7,18 @@ export default function ProfileReviews(props) {
     let anythingReviewed = false;
     if (props.userReaderExperiences.length){
         reviews = props.userReaderExperiences.map((experience, key) => {
-            if (experience.review){
+            if (experience.review || experience.rating){
                 anythingReviewed = true;
                 return (
-                    <div key={key} value={reviews._id}>
+                    <div className="review" key={key} value={reviews._id}>
                         <p>
-                            <NavLink className="nav-link" to = {`/readerexperiences/${experience._id}/edit`}> {experience.book.title} </NavLink> by {experience.book.author}
+                            <NavLink className="nav-link" to = {`/readerexperiences/edit?book=${experience.book._id}`}> {experience.book.title} </NavLink> by {experience.book.author}
                         </p>
                         <p>{experience.rating} out of 5 stars</p>
-                        <p>{experience.review}</p>
+                        {experience.review 
+                            ? <p>"{experience.review}"</p>
+                            : <></>
+                        }
                     </div>
                 )
             }
@@ -30,8 +32,8 @@ export default function ProfileReviews(props) {
     } 
 
     return(
-        <div className="half-pane">
-            <h2>My book reviews</h2>
+        <div className="lower-pane">
+            <h3>My book reviews</h3>
             {reviews}
         </div>
     )
